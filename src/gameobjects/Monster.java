@@ -26,15 +26,11 @@ public abstract class Monster {
 	public void updateGameObject()
 	{
 		move();
+		//shoot()?
 	}
-
-	private void move()
-	{
-		Vector2 normalizedDirection = getNormalizedDirection();
-		Vector2 positionAfterMoving = getPosition().addVector(normalizedDirection);
-		setPosition(positionAfterMoving);
-		direction = new Vector2();
-	}
+	
+	// Chaque type de monstre a sa façon de se déplacer, on spécifiera leurs mouvements dans leur classe
+	abstract void move();
 
 	public void drawGameObject()
 	{
