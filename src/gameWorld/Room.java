@@ -3,16 +3,21 @@ package gameWorld;
 import gameobjects.Hero;
 import libraries.StdDraw;
 import libraries.Vector2;
+import resources.ImagePaths;
 import resources.RoomInfos;
 
 public class Room
 {
 	private Hero hero;
+	private String groundTile; //background
+	
 
 
 	public Room(Hero hero)
 	{
 		this.hero = hero;
+		this.groundTile = ImagePaths.WALL;
+		
 	}
 
 

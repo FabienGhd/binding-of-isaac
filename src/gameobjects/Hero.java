@@ -10,15 +10,17 @@ public class Hero
 	private String imagePath;
 	private double speed;
 	private Vector2 direction;
+	private int health;
 
 
-	public Hero(Vector2 position, Vector2 size, double speed, String imagePath)
+	public Hero(Vector2 position, Vector2 size, double speed, String imagePath, int health) 
 	{
 		this.position = position;
 		this.size = size;
 		this.speed = speed;
 		this.imagePath = imagePath;
 		this.direction = new Vector2();
+		this.health = health;
 	}
 
 	public void updateGameObject()
