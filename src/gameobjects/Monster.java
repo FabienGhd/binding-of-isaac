@@ -1,5 +1,6 @@
 package gameobjects;
 
+import libraries.StdDraw;
 import libraries.Vector2;
 
 public abstract class Monster {
@@ -11,13 +12,48 @@ public abstract class Monster {
 	private Vector2 direction;
 	private int damage;
 	private int health;
-	
+
+
 	public Monster(Vector2 position)
 	{
 		this.position = position;
 		this.direction = new Vector2();
 	}
+	
+	/**
+	 * Les 4 prochaines fonctions sont une simple copie des fonctions de 'Hero', à voir si il faut les modifier un peu
+	 */
+	public void updateGameObject()
+	{
+		move();
+	}
 
+	private void move()
+	{
+		Vector2 normalizedDirection = getNormalizedDirection();
+		Vector2 positionAfterMoving = getPosition().addVector(normalizedDirection);
+		setPosition(positionAfterMoving);
+		direction = new Vector2();
+	}
+
+	public void drawGameObject()
+	{
+		StdDraw.picture(getPosition().getX(), getPosition().getY(), getImagePath(), getSize().getX(), getSize().getY(),
+				0);
+	}
+
+	public Vector2 getNormalizedDirection()
+	{
+		Vector2 normalizedVector = new Vector2(direction);
+		normalizedVector.euclidianNormalize(speed);
+		return normalizedVector;
+	}
+	
+	
+	
+	/*
+	 * Getters and Setters
+	 */
 	public Vector2 getPosition() {
 		return position;
 	}

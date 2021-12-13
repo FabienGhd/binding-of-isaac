@@ -1,6 +1,8 @@
 package gameWorld;
 
+import gameobjects.Fly;
 import gameobjects.Hero;
+import gameobjects.Monster;
 import libraries.StdDraw;
 import libraries.Vector2;
 import resources.ImagePaths;
@@ -12,12 +14,14 @@ public class Room
 	private Hero hero;
 	private String groundTile; //tile for background
 	private StaticObject[] obstacle;
+	private Monster mobs;
 	
 
 	public Room(Hero hero)
 	{
 		this.hero = hero;
 		this.groundTile = ImagePaths.WALL;
+		this.mobs = new Fly(new Vector2(0.5, 0.5)); //TEST
 		
 	}
 
@@ -28,12 +32,20 @@ public class Room
 	public void updateRoom()
 	{
 		makeHeroPlay();
+		makeMobsPlay();
 	}
 
 
 	private void makeHeroPlay()
 	{
 		hero.updateGameObject();
+	}
+	
+	/**
+	 * Parcours la liste des mobs présents dans la pièce, les fait avancer d'un tick
+	 */
+	public void makeMobsPlay() {
+		mobs.updateGameObject();		 
 	}
 
 	/*
@@ -53,6 +65,7 @@ public class Room
 			}
 		}
 		hero.drawGameObject();
+		mobs.drawGameObject();
 	}
 	
 	/**
