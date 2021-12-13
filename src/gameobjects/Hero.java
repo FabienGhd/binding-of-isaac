@@ -2,6 +2,7 @@ package gameobjects;
 
 import libraries.StdDraw;
 import libraries.Vector2;
+import resources.ImagePaths;
 
 public class Hero
 {
@@ -40,6 +41,15 @@ public class Hero
 	{
 		StdDraw.picture(getPosition().getX(), getPosition().getY(), getImagePath(), getSize().getX(), getSize().getY(),
 				0);
+		
+		if(this.health != 0) { //TODO: could be great to find a better way to manage this case?
+			
+			//half hearts
+			boolean half = (this.health % 2 == 1);
+			if(half) {
+				StdDraw.picture(0.95, 0.95, ImagePaths.HALF_HEART_HUD); //TEST
+			}
+		}
 	}
 
 	/*

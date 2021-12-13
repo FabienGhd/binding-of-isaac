@@ -25,7 +25,7 @@ public class Physics
 		boolean tooFarBelow = pos1.getY() + (size1.getY() / 2) < authorizedOverlap + pos2.getY() - (size2.getY() / 2);
 		boolean tooFarRight = pos1.getX() - (size1.getX() / 2) + authorizedOverlap > pos2.getX() + (size2.getX() / 2);
 		boolean tooFarAbove = pos1.getY() - (size1.getY() / 2) + authorizedOverlap > pos2.getY() + (size2.getY() / 2);
-
+	
 		if (tooFarLeft || tooFarRight || tooFarAbove || tooFarBelow)
 		{
 			return false;
