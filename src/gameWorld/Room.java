@@ -36,7 +36,7 @@ public class Room
 	public void drawRoom()
 	{
 		// For every tile, set background color.
-		StdDraw.setPenColor(StdDraw.GRAY);
+		StdDraw.setPenColor(StdDraw.CYAN);
 		for (int i = 0; i < RoomInfos.NB_TILES; i++)
 		{
 			for (int j = 0; j < RoomInfos.NB_TILES; j++)
