@@ -5,13 +5,14 @@ import libraries.StdDraw;
 import libraries.Vector2;
 import resources.ImagePaths;
 import resources.RoomInfos;
+import gameobjects.StaticObject; //new import
 
 public class Room
 {
 	private Hero hero;
-	private String groundTile; //background
+	private String groundTile; //tile for background
+	private StaticObject[] obstacle;
 	
-
 
 	public Room(Hero hero)
 	{
