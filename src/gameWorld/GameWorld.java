@@ -19,6 +19,7 @@ public class GameWorld
 	public void processUserInput()
 	{
 		processKeysForMovement();
+		processOtherKeys();
 	}
 
 	public boolean gameOver()
@@ -57,6 +58,25 @@ public class GameWorld
 		if (StdDraw.isKeyPressed(Controls.goLeft))
 		{
 			hero.goLeftNext();
+		}
+	}
+	
+	private void processOtherKeys() {
+		if (StdDraw.isKeyPressed(Controls.shootUp))
+		{
+			currentRoom.shootUp();
+		}
+		if (StdDraw.isKeyPressed(Controls.shootDown))
+		{
+			currentRoom.shootDown();
+		}
+		if (StdDraw.isKeyPressed(Controls.shootRight))
+		{
+			currentRoom.shootRight();
+		}
+		if (StdDraw.isKeyPressed(Controls.shootLeft))
+		{
+			currentRoom.shootLeft();
 		}
 	}
 }

@@ -29,6 +29,7 @@ public class Projectile {
 	public void updateGameObject()
 	{
 		move();
+		//TODO: si balle touche/sort de l'écran/atteint son reach : on la supprime
 	}
 
 	private void move()

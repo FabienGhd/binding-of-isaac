@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import gameobjects.Fly;
 import gameobjects.Hero;
 import gameobjects.Monster;
+import gameobjects.Projectile;
 import gameobjects.Spider;
 import libraries.StdDraw;
 import libraries.Vector2;
@@ -18,6 +19,7 @@ public class Room
 	private String groundTile; //tile for background
 	private StaticObject[] obstacle;
 	private ArrayList<Monster> mobs;
+	private ArrayList<Projectile> proj;
 	
 
 	public Room(Hero hero)
@@ -26,6 +28,7 @@ public class Room
 		this.groundTile = ImagePaths.DEFAULT_TILE;
 		this.mobs = new ArrayList<Monster>(); //TEST
 		mobs.add(new Spider(new Vector2(0.5, 0.5)));
+		this.proj = new ArrayList<Projectile>();
 		
 	}
 
@@ -37,6 +40,7 @@ public class Room
 	{
 		makeHeroPlay();
 		makeMobsPlay();
+		makeProjPlay(); // On pourra changer le nom de la fonction
 	}
 
 
@@ -46,12 +50,18 @@ public class Room
 	}
 	
 	/**
-	 * Parcours la liste des mobs prï¿½sents dans la piece, les fait avancer d'un tick
+	 * Parcours la liste des mobs presents dans la piece, les fait avancer d'un tick
 	 */
-	public void makeMobsPlay() {
+	private void makeMobsPlay() {
 		for(int i = 0; i < mobs.size(); i++) {
 			mobs.get(i).updateGameObject(); 
-		}		 
+		}
+	}
+	
+	private void makeProjPlay() {
+		for(int i = 0; i < proj.size(); i++) {
+			proj.get(i).updateGameObject(); 
+		}
 	}
 
 	/*
@@ -74,9 +84,15 @@ public class Room
 			}
 		}
 		hero.drawGameObject();
+		
 		//Dessine tous les mobs de la pièce
 		for(int i = 0; i < mobs.size(); i++) {
 			mobs.get(i).drawGameObject();
+		}
+		
+		//Dessine tous les projectiles
+		for(int i = 0; i < proj.size(); i++) {
+			proj.get(i).drawGameObject();
 		}
 		
 		
@@ -95,6 +111,8 @@ public class Room
 
 	}
 	
+	
+	
 	/**
 	 * Convert a tile index to a 0-1 position.
 	 * 
@@ -106,5 +124,33 @@ public class Room
 	{
 		return new Vector2(indexX * RoomInfos.TILE_WIDTH + RoomInfos.HALF_TILE_SIZE.getX(),
 				indexY * RoomInfos.TILE_HEIGHT + RoomInfos.HALF_TILE_SIZE.getY());
+	}
+
+	
+	/**
+	 * Fonctions qui gerent les entrees clavier pour tirer un projectile
+	 * TODO: ajouter un delay entre les tirs
+	 */
+	public void shootUp() {
+		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize(), ImagePaths.TEAR, hero.getSpeed(), new Vector2(0, 1), 0, 0);
+		proj.add(projectile_test);
+	}
+
+
+	public void shootDown() {
+		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize(), ImagePaths.TEAR, hero.getSpeed(), new Vector2(0, -1), 0, 0);
+		proj.add(projectile_test);
+	}
+
+
+	public void shootRight() {
+		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize(), ImagePaths.TEAR, hero.getSpeed(), new Vector2(1, 0), 0, 0);
+		proj.add(projectile_test);
+	}
+
+
+	public void shootLeft() {
+		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize(), ImagePaths.TEAR, hero.getSpeed(), new Vector2(-1, 0), 0, 0);
+		proj.add(projectile_test);
 	}
 }
