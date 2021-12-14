@@ -3,8 +3,11 @@
 /gameobjects/
 /libraries/
 /resources/
+<<<<<<< HEAD
 /snippet/
 /tile1.png
 /tile2.png
 /tile3.png
 /corner_top_left.png
+=======
+>>>>>>> 059672fdc39d12a67c46a9c491fd825ca42d4680

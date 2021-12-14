@@ -1,8 +1,11 @@
 package gameWorld;
 
+import java.util.ArrayList;
+
 import gameobjects.Fly;
 import gameobjects.Hero;
 import gameobjects.Monster;
+import gameobjects.Spider;
 import libraries.StdDraw;
 import libraries.Vector2;
 import resources.ImagePaths;
@@ -14,14 +17,15 @@ public class Room
 	private Hero hero;
 	private String groundTile; //tile for background
 	private StaticObject[] obstacle;
-	private Monster mobs;
+	private ArrayList<Monster> mobs;
 	
 
 	public Room(Hero hero)
 	{
 		this.hero = hero;
 		this.groundTile = ImagePaths.DEFAULT_TILE;
-		this.mobs = new Fly(new Vector2(0.5, 0.5)); //TEST
+		this.mobs = new ArrayList<Monster>(); //TEST
+		mobs.add(new Spider(new Vector2(0.5, 0.5)));
 		
 	}
 
@@ -42,10 +46,12 @@ public class Room
 	}
 	
 	/**
-	 * Parcours la liste des mobs prï¿½sents dans la piï¿½ce, les fait avancer d'un tick
+	 * Parcours la liste des mobs prï¿½sents dans la piece, les fait avancer d'un tick
 	 */
 	public void makeMobsPlay() {
-		mobs.updateGameObject();		 
+		for(int i = 0; i < mobs.size(); i++) {
+			mobs.get(i).updateGameObject(); 
+		}		 
 	}
 
 	/*
@@ -68,7 +74,10 @@ public class Room
 			}
 		}
 		hero.drawGameObject();
-		mobs.drawGameObject();
+		//Dessine tous les mobs de la pièce
+		for(int i = 0; i < mobs.size(); i++) {
+			mobs.get(i).drawGameObject();
+		}
 		
 		
 		
