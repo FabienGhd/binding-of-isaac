@@ -41,4 +41,12 @@ public class ImagePaths
 
 	public static final String WIN_SCREEN = "images/win.jpg";
 	public static final String LOSE_SCREEN = "images/lose.png";
+	
+	//we need to add some images ourselves for the background
+	public static final String DEFAULT_TILE = "images/tile3.png";
+
+	
+	
+	
+	
 }

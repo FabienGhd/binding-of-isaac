@@ -20,7 +20,7 @@ public class Room
 	public Room(Hero hero)
 	{
 		this.hero = hero;
-		this.groundTile = ImagePaths.WALL;
+		this.groundTile = ImagePaths.DEFAULT_TILE;
 		this.mobs = new Fly(new Vector2(0.5, 0.5)); //TEST
 		
 	}
@@ -42,7 +42,7 @@ public class Room
 	}
 	
 	/**
-	 * Parcours la liste des mobs présents dans la pièce, les fait avancer d'un tick
+	 * Parcours la liste des mobs prï¿½sents dans la piï¿½ce, les fait avancer d'un tick
 	 */
 	public void makeMobsPlay() {
 		mobs.updateGameObject();		 
@@ -60,8 +60,10 @@ public class Room
 			for (int j = 0; j < RoomInfos.NB_TILES; j++)
 			{
 				Vector2 position = positionFromTileIndex(i, j);
-				StdDraw.filledRectangle(position.getX(), position.getY(), RoomInfos.HALF_TILE_SIZE.getX(),
-						RoomInfos.HALF_TILE_SIZE.getY());
+				StdDraw.picture(position.getX(), position.getY(), groundTile, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+
+				//StdDraw.filledRectangle(position.getX(), position.getY(), RoomInfos.HALF_TILE_SIZE.getX(),
+						//RoomInfos.HALF_TILE_SIZE.getY());
 			}
 		}
 		hero.drawGameObject();
