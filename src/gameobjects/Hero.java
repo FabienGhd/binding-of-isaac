@@ -44,10 +44,18 @@ public class Hero
 		
 		if(this.health != 0) { //TODO: could be great to find a better way to manage this case?
 			
-			//half hearts
+			//1 full heart gives 2 health points 
+			//1/2 hearts gives 1 health point
+			
+			//draw full hearts is Isaac's health is 4 or 2
+			boolean full = (this.health % 2 == 0);
+			//draw half hearts if Isaac's health is 5,3 or 1 :
 			boolean half = (this.health % 2 == 1);
 			if(half) {
 				StdDraw.picture(0.75, 0.75, ImagePaths.HALF_HEART_HUD); //TEST - random coordinates 
+			} else {
+				StdDraw.picture(0.25, 0.25, ImagePaths.HEART_HUD); //TEST - random coordinates 
+
 			}
 		}
 	}
