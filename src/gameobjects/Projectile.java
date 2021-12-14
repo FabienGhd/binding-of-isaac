@@ -13,9 +13,10 @@ public class Projectile {
 	private Vector2 direction;
 	private int damage;
 	private int reach;
+	private boolean affect; // True : fait des degats au hero ; False : aux monstres
 	
 	
-	public Projectile(Vector2 p, Vector2 s, String im, double spd, Vector2 dir, int dam, int r)
+	public Projectile(Vector2 p, Vector2 s, String im, double spd, Vector2 dir, int dam, int r, boolean a)
 	{
 		position = p;
 		size = s;
@@ -24,6 +25,7 @@ public class Projectile {
 		direction = dir;
 		damage = dam;
 		reach = r;
+		affect = a;
 	}
 	
 	public void updateGameObject()

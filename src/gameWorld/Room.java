@@ -83,6 +83,7 @@ public class Room
 						//RoomInfos.HALF_TILE_SIZE.getY());
 			}
 		}
+		
 		hero.drawGameObject();
 		
 		//Dessine tous les mobs de la pièce
@@ -132,25 +133,25 @@ public class Room
 	 * TODO: ajouter un delay entre les tirs
 	 */
 	public void shootUp() {
-		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize(), ImagePaths.TEAR, hero.getSpeed(), new Vector2(0, 1), 0, 0);
+		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(0, 1), 0, 0, false);
 		proj.add(projectile_test);
 	}
 
 
 	public void shootDown() {
-		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize(), ImagePaths.TEAR, hero.getSpeed(), new Vector2(0, -1), 0, 0);
+		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(0, -1), 0, 0, false);
 		proj.add(projectile_test);
 	}
 
 
 	public void shootRight() {
-		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize(), ImagePaths.TEAR, hero.getSpeed(), new Vector2(1, 0), 0, 0);
+		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(1, 0), 0, 0, false);
 		proj.add(projectile_test);
 	}
 
 
 	public void shootLeft() {
-		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize(), ImagePaths.TEAR, hero.getSpeed(), new Vector2(-1, 0), 0, 0);
+		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(-1, 0), 0, 0, false);
 		proj.add(projectile_test);
 	}
 }

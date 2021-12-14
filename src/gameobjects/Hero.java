@@ -12,6 +12,7 @@ public class Hero
 	private double speed;
 	private Vector2 direction;
 	private int health;
+	private boolean canShoot;
 
 
 	public Hero(Vector2 position, Vector2 size, double speed, String imagePath, int health) 
