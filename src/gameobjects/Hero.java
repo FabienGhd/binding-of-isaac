@@ -47,7 +47,7 @@ public class Hero
 			//half hearts
 			boolean half = (this.health % 2 == 1);
 			if(half) {
-				StdDraw.picture(0.95, 0.95, ImagePaths.HALF_HEART_HUD); //TEST
+				StdDraw.picture(0.75, 0.75, ImagePaths.HALF_HEART_HUD); //TEST - random coordinates 
 			}
 		}
 	}

@@ -44,6 +44,11 @@ public class ImagePaths
 	
 	//we need to add some images ourselves for the background
 	public static final String DEFAULT_TILE = "images/tile3.png";
+	
+	//corners
+	public static final String CORNER_TOP_LEFT = "images/corner_top_left.png";
+
+	
 
 	
 	

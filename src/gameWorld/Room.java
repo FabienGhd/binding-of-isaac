@@ -68,6 +68,17 @@ public class Room
 		}
 		hero.drawGameObject();
 		mobs.drawGameObject();
+		
+		
+		//lower left corner (0,0)
+		StdDraw.picture(positionFromTileIndex(0, 0).getX(), positionFromTileIndex(0, 0).getY(), ImagePaths.WALL, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+		//lower right corner(nb_tiles-1, 0)
+		StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, 0).getX(), positionFromTileIndex(RoomInfos.NB_TILES - 1, 0).getY(), ImagePaths.WALL, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+		//top right corner (nb_tiles-1, nb_tiles-1)
+		StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, RoomInfos.NB_TILES - 1).getX(), positionFromTileIndex(RoomInfos.NB_TILES - 1, RoomInfos.NB_TILES - 1).getY(), ImagePaths.WALL, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+		//top left corner
+		StdDraw.picture(positionFromTileIndex(0, RoomInfos.NB_TILES - 1).getX(), positionFromTileIndex(0, RoomInfos.NB_TILES - 1).getY(), ImagePaths.WALL, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+
 	}
 	
 	/**
