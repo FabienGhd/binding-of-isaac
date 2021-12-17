@@ -13,6 +13,7 @@ public class Hero
 	private Vector2 direction;
 	private int health;
 	private boolean canShoot;
+	private boolean canMove; // False si son prochain mouvement est invalide
 
 
 	public Hero(Vector2 position, Vector2 size, double speed, String imagePath, int health) 
@@ -23,11 +24,26 @@ public class Hero
 		this.imagePath = imagePath;
 		this.direction = new Vector2();
 		this.health = health;
+		this.canShoot = true;
+		this.canMove = true;
+	}
+	
+	// Nouveau constructeur : copie ; il servira pour les collisions.
+	public Hero(Hero h) {
+		this.position = h.position;
+		this.size = h.size;
+		this.speed = h.speed;
+		this.imagePath = h.imagePath;
+		this.direction = new Vector2();
+		this.health = h.health;
+		this.canShoot = true;
+		this.canMove = true;
 	}
 
 	public void updateGameObject()
 	{
-		move();
+		if(canMove == true) move();
+		canMove = true;
 	}
 
 	private void move()
@@ -144,4 +160,30 @@ public class Hero
 	{
 		this.direction = direction;
 	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
+	public boolean getCanShoot() {
+		return canShoot;
+	}
+
+	public void setCanShoot(boolean canShoot) {
+		this.canShoot = canShoot;
+	}
+
+	public boolean getCanMove() {
+		return canMove;
+	}
+
+	public void setCanMove(boolean canMove) {
+		this.canMove = canMove;
+	}
+	
+	
 }

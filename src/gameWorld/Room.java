@@ -7,6 +7,7 @@ import gameobjects.Hero;
 import gameobjects.Monster;
 import gameobjects.Projectile;
 import gameobjects.Spider;
+import libraries.Physics;
 import libraries.StdDraw;
 import libraries.Vector2;
 import resources.ImagePaths;
@@ -17,7 +18,7 @@ public class Room
 {
 	private Hero hero;
 	private String groundTile; //tile for background
-	private StaticObject[] obstacle;
+	private ArrayList<StaticObject> obstacles;
 	private ArrayList<Monster> mobs;
 	private ArrayList<Projectile> proj;
 	
@@ -29,6 +30,8 @@ public class Room
 		this.mobs = new ArrayList<Monster>(); //TEST
 		mobs.add(new Spider(new Vector2(0.5, 0.5)));
 		this.proj = new ArrayList<Projectile>();
+		this.obstacles = new ArrayList<StaticObject>();
+		obstacles.add(new StaticObject(new Vector2(0.9, 0.1), hero.getSize(), ImagePaths.ROCK));
 		
 	}
 
@@ -38,6 +41,8 @@ public class Room
 	 */
 	public void updateRoom()
 	{
+		if(hero.getCanMove() == false) System.out.println(hero.getCanMove());
+		collision(); // On lance les detections de collision avant les mouvements
 		makeHeroPlay();
 		makeMobsPlay();
 		makeProjPlay(); // On pourra changer le nom de la fonction
@@ -63,6 +68,18 @@ public class Room
 			proj.get(i).updateGameObject(); 
 		}
 	}
+	
+	private void collision() {
+		Hero hero_cp = new Hero(hero); // On cree une copie pour ne pas modifier le vrai
+		hero_cp.updateGameObject();
+		for(StaticObject obs : obstacles) {
+			// Si la prochaine position du hero est invalide, il ne bouge pas
+			if(Physics.rectangleCollision(hero_cp.getPosition(), hero_cp.getSize(), obs.getPosition(), obs.getSize())) {
+				hero.setCanMove(false);
+			}
+		}
+	}
+	
 
 	/*
 	 * Drawing
@@ -94,6 +111,10 @@ public class Room
 		//Dessine tous les projectiles
 		for(int i = 0; i < proj.size(); i++) {
 			proj.get(i).drawGameObject();
+		}
+		
+		for(StaticObject obs : obstacles) {
+			obs.drawGameObject();
 		}
 		
 		
