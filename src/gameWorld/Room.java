@@ -31,7 +31,7 @@ public class Room
 		mobs.add(new Spider(new Vector2(0.5, 0.5)));
 		this.proj = new ArrayList<Projectile>();
 		this.obstacles = new ArrayList<StaticObject>();
-		obstacles.add(new StaticObject(new Vector2(0.9, 0.1), hero.getSize(), ImagePaths.ROCK));
+		obstacles.add(new StaticObject(new Vector2(0.8, 0.3), hero.getSize(), ImagePaths.ROCK));
 		
 	}
 
@@ -103,7 +103,7 @@ public class Room
 		
 		hero.drawGameObject();
 		
-		//Dessine tous les mobs de la pièce
+		//Dessine tous les mobs de la piï¿½ce
 		for(int i = 0; i < mobs.size(); i++) {
 			mobs.get(i).drawGameObject();
 		}
@@ -120,17 +120,30 @@ public class Room
 		
 		
 				
-			
+		
 		
 		//lower left corner (0,0)
-		StdDraw.picture(positionFromTileIndex(0, 0).getX(), positionFromTileIndex(0, 0).getY(), ImagePaths.WALL, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+		StdDraw.picture(positionFromTileIndex(0, 0).getX(), positionFromTileIndex(0, 0).getY(), ImagePaths.CORNER_BOTTOM_LEFT, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 		//lower right corner(nb_tiles-1, 0)
-		StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, 0).getX(), positionFromTileIndex(RoomInfos.NB_TILES - 1, 0).getY(), ImagePaths.WALL, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+		StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, 0).getX(), positionFromTileIndex(RoomInfos.NB_TILES - 1, 0).getY(), ImagePaths.CORNER_BOTTOM_RIGHT, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 		//top right corner (nb_tiles-1, nb_tiles-1)
-		StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, RoomInfos.NB_TILES - 1).getX(), positionFromTileIndex(RoomInfos.NB_TILES - 1, RoomInfos.NB_TILES - 1).getY(), ImagePaths.WALL, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+		StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, RoomInfos.NB_TILES - 1).getX(), positionFromTileIndex(RoomInfos.NB_TILES - 1, RoomInfos.NB_TILES - 1).getY(), ImagePaths.CORNER_TOP_RIGHT, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 		//top left corner
 		StdDraw.picture(positionFromTileIndex(0, RoomInfos.NB_TILES - 1).getX(), positionFromTileIndex(0, RoomInfos.NB_TILES - 1).getY(), ImagePaths.CORNER_TOP_LEFT, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 
+		
+		//draws walls
+		for(int i = 1; i < RoomInfos.NB_TILES-1; i++) {
+			//left walls (x=0, y=i) 
+			StdDraw.picture(positionFromTileIndex(0, i).getX(),positionFromTileIndex(0, i).getY(), ImagePaths.WALL_DEFAULT2, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+			//bottom walls (x=i, y=0)
+			StdDraw.picture(positionFromTileIndex(i, 0).getX(),positionFromTileIndex(i, 0).getY(), ImagePaths.WALL_DEFAULT5, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+			//right walls (x=nb_tiles-1, y=i)
+			StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES-1, i).getX(),positionFromTileIndex(RoomInfos.NB_TILES-1, i).getY(), ImagePaths.WALL_DEFAULT4, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+			//top walls (x=i, y=nb_tiles-1)
+			StdDraw.picture(positionFromTileIndex(i, RoomInfos.NB_TILES-1).getX(),positionFromTileIndex(i, RoomInfos.NB_TILES-1).getY(), ImagePaths.WALL_DEFAULT3, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+		}
+		
 	}
 	
 	

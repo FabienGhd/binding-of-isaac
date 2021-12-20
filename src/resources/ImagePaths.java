@@ -47,6 +47,21 @@ public class ImagePaths
 	
 	//corners
 	public static final String CORNER_TOP_LEFT = "images/corner_top_left.png";
+	public static final String CORNER_TOP_RIGHT = "images/corner_top_right.png";
+	public static final String CORNER_BOTTOM_LEFT = "images/corner_bottom_left.png";
+	public static final String CORNER_BOTTOM_RIGHT = "images/corner_bottom_right.png";
+
+	//walls
+	public static final String WALL_DEFAULT = "images/wall_default1.png";
+	public static final String WALL_DEFAULT2 = "images/wall_default2.png";
+	public static final String WALL_DEFAULT3 = "images/wall_default3.png";
+	public static final String WALL_DEFAULT4 = "images/wall_default4.png";
+	public static final String WALL_DEFAULT5 = "images/wall_default5.png";
+
+
+
+
+ 
 
 	
 
