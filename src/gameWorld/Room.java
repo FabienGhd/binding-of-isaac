@@ -1,6 +1,7 @@
 package gameWorld;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import gameobjects.Fly;
 import gameobjects.Hero;
@@ -12,7 +13,9 @@ import libraries.StdDraw;
 import libraries.Vector2;
 import resources.ImagePaths;
 import resources.RoomInfos;
-import gameobjects.StaticObject; //new import
+import gameobjects.StaticObject;
+import gameobjects.PickableObject;
+
 
 public class Room
 {
@@ -21,7 +24,7 @@ public class Room
 	private ArrayList<StaticObject> obstacles;
 	private ArrayList<Monster> mobs;
 	private ArrayList<Projectile> proj;
-	
+	private ArrayList<PickableObject> pickable;
 
 	public Room(Hero hero)
 	{
@@ -35,6 +38,9 @@ public class Room
 		this.obstacles = new ArrayList<StaticObject>();
 		obstacles.add(new StaticObject(new Vector2(0.8, 0.3), hero.getSize(), ImagePaths.ROCK));
 		
+		this.pickable = new ArrayList<PickableObject>();
+		
+		pickable.add(new PickableObject(new Vector2(0.2, 0.8), RoomInfos.TILE_SIZE.scalarMultiplication(0.3), ImagePaths.DIME));
 		
 	}
 
@@ -140,10 +146,13 @@ public class Room
 			proj.get(i).drawGameObject();
 		}
 		
+		//draws the obstacles
 		for(StaticObject obs : obstacles) {
 			obs.drawGameObject();
 		}
 		
+		//draws pickable objects
+		for(PickableObject obj : pickable) obj.drawGameObject();
 		
 	}
 	

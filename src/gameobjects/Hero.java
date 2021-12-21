@@ -1,8 +1,12 @@
 package gameobjects;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import libraries.StdDraw;
 import libraries.Vector2;
 import resources.ImagePaths;
+import libraries.Physics;
 
 
 public class Hero
@@ -57,14 +61,55 @@ public class Hero
 		direction = new Vector2();
 	}
 	
+	//coin values information: https://bindingofisaacrebirth.fandom.com/wiki/Coins
+	private void pickableObjects(ArrayList<PickableObject> objects) {
+		if(objects != null) { 
+			
+			List<PickableObject> removeList = new ArrayList<PickableObject>();
+			
+			for(int i = 0; i < objects.size(); i++) {
+				
+				if(objects.get(i) != null) {
+					
+					if(objects.get(i).getImagePath() ==  "images/Penny.png") {
+						this.coin += 1;
+						removeList.add(objects.get(i));
+					}	
+					else if(objects.get(i).getImagePath() == "images/Dime.png") {
+						this.coin =+ 10;
+						removeList.add(objects.get(i));
+					}
+					else if(objects.get(i).getImagePath() == "images/Nickel.png") {
+						this.coin += 5;
+						removeList.add(objects.get(i));
+					}
+					else if(objects.get(i).getImagePath() == "images/Half_Red_Heart.png" && this.health <= 5) {
+						this.health += 1;
+						removeList.add(objects.get(i));
+					}
+					else if(objects.get(i).getImagePath() == "images/Red_Heart.png" && this.health <= 4) {
+						this.health += 2;
+						removeList.add(objects.get(i));
+					}
+				} 
+			}
+			//we delete what has been picked 
+			for(int i = 0; i < removeList.size(); i++) {
+				objects.remove(removeList.get(i));
+			}
+		}
+	}
 
 	public void drawGameObject()
 	{
 		StdDraw.picture(getPosition().getX(), getPosition().getY(), getImagePath(), getSize().getX(), getSize().getY(),
 				0);
 		
+		StdDraw.setPenColor(StdDraw.RED);
+		StdDraw.text(0.2, 0.025, "Health : " + this.health);
 		StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE);
-		StdDraw.text(0.2, 0.025, "health : " + this.coin);
+		StdDraw.text(0.2, 0.055, "Coins : " + this.coin);
+		
 		
 		/* -- HEARTS --
 		Isaac's health is 6 
