@@ -47,14 +47,15 @@ public class Main
 		Clip backgroundClip = AudioSystem.getClip();
 		backgroundClip.open(audio);
 		FloatControl gainControl = (FloatControl) backgroundClip.getControl(FloatControl.Type.MASTER_GAIN);
-		gainControl.setValue(-29.0f); // Reduce volume by 29 decibels.
+		gainControl.setValue(-29.0f); // Reduces volume by 29 decibels.
 	
-		// Main loop of the game - remove the comment on 'clip.start' to enjoy a background music
+		// Main loop of the game - remove the comments to have a background music and/or a welcoming message in whichever language you want
 		while (!world.gameOver())
 		{
 			processNextStep(world);
-			welcomeFrenchClip.start();
-			backgroundClip.start();
+			//welcomeFrenchClip.start();
+			//welcomeEnglishClip.start();
+			//backgroundClip.start();
 			
 		}
 	}

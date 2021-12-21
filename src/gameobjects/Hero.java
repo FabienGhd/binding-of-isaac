@@ -57,7 +57,10 @@ public class Hero
 	{
 		Vector2 normalizedDirection = getNormalizedDirection();
 		Vector2 positionAfterMoving = getPosition().addVector(normalizedDirection);
-		setPosition(positionAfterMoving);
+		
+		if(inRoom(positionAfterMoving)) {
+			setPosition(positionAfterMoving);
+		}
 		direction = new Vector2();
 	}
 	
@@ -99,6 +102,16 @@ public class Hero
 			}
 		}
 	}
+	
+	//map boundaries
+	private boolean inRoom(Vector2 position) {
+		if(position.getY() > 0.12 && position.getY() < 0.90 && position.getX() > 0.12 && position.getX() < 0.90) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 
 	public void drawGameObject()
 	{
