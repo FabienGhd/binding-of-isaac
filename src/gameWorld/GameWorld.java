@@ -3,8 +3,10 @@ package gameWorld;
 import gameobjects.Hero;
 import libraries.StdDraw;
 import resources.Controls;
+import gameloop.Main;
 
-public class GameWorld
+
+public class GameWorld 
 {
 	private Room currentRoom;
 	private Hero hero;
@@ -79,4 +81,5 @@ public class GameWorld
 			currentRoom.shootLeft();
 		}
 	}
+	
 }
