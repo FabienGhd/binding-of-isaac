@@ -53,10 +53,10 @@ public class ImagePaths
 
 	//walls
 	public static final String WALL_DEFAULT = "images/wall_default1.png";
-	public static final String WALL_DEFAULT2 = "images/wall_default2.png";
-	public static final String WALL_DEFAULT3 = "images/wall_default3.png";
-	public static final String WALL_DEFAULT4 = "images/wall_default4.png";
-	public static final String WALL_DEFAULT5 = "images/wall_default5.png";
+	public static final String WALL_LEFT = "images/wall_default2.png";
+	public static final String WALL_TOP = "images/wall_default3.png";
+	public static final String WALL_RIGHT = "images/wall_default4.png";
+	public static final String WALL_BOTTOM = "images/wall_default5.png";
 
 
 
