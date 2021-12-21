@@ -17,7 +17,6 @@ import java.io.IOException;
 import javax.sound.sampled.*; 
 
 
-
 public class Main
 {
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException
@@ -27,18 +26,36 @@ public class Main
 		GameWorld world = new GameWorld(isaac);				
 		initializeDisplay();
 		
-		//SOUND
-		File sound = new File("sounds/backgroundMusic.wav");
-		AudioInputStream audio = AudioSystem.getAudioInputStream(sound);
-		Clip clip = AudioSystem.getClip();
-		clip.open(audio);
-
+		
+		//french welcoming message
+		File welcomeFR = new File("sounds/welcomeFR.wav");
+		AudioInputStream audioStreamFR = AudioSystem.getAudioInputStream(welcomeFR);
+		Clip welcomeFrenchClip = AudioSystem.getClip();
+		welcomeFrenchClip.open(audioStreamFR);
+		
+		
+		//english welcoming message
+		File welcomeEN = new File("sounds/welcomeEN.wav");
+		AudioInputStream audioStream = AudioSystem.getAudioInputStream(welcomeEN);
+		Clip welcomeEnglishClip = AudioSystem.getClip();
+		welcomeEnglishClip.open(audioStream);
+		
+		
+		//background sound
+		File background = new File("sounds/backgroundMusic.wav");
+		AudioInputStream audio = AudioSystem.getAudioInputStream(background);
+		Clip backgroundClip = AudioSystem.getClip();
+		backgroundClip.open(audio);
+		FloatControl gainControl = (FloatControl) backgroundClip.getControl(FloatControl.Type.MASTER_GAIN);
+		gainControl.setValue(-29.0f); // Reduce volume by 29 decibels.
 	
 		// Main loop of the game - remove the comment on 'clip.start' to enjoy a background music
 		while (!world.gameOver())
 		{
 			processNextStep(world);
-			//clip.start();
+			welcomeFrenchClip.start();
+			backgroundClip.start();
+			
 		}
 	}
 
