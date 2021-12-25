@@ -37,6 +37,7 @@ public abstract class Monster {
 		StdDraw.picture(getPosition().getX(), getPosition().getY(), getImagePath(), getSize().getX(), getSize().getY(),
 				0);
 	}
+	
 
 	public Vector2 getNormalizedDirection()
 	{
@@ -44,7 +45,6 @@ public abstract class Monster {
 		normalizedVector.euclidianNormalize(speed);
 		return normalizedVector;
 	}
-	
 	
 	
 	/*

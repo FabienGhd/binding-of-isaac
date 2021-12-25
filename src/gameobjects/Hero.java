@@ -6,6 +6,7 @@ import java.util.List;
 import libraries.StdDraw;
 import libraries.Vector2;
 import resources.ImagePaths;
+import resources.RoomInfos;
 import libraries.Physics;
 
 
@@ -69,7 +70,7 @@ public class Hero
 	 * @param proj
 	 * @param pickable
 	 */
-	public void collision(ArrayList<StaticObject> obstacles, ArrayList<Monster> mobs, ArrayList<Projectile> proj, ArrayList<PickableObject> pickable) {
+	public void collision(ArrayList<StaticObject> obstacles, ArrayList<Monster> mobs, ArrayList<Projectile> projectiles, ArrayList<PickableObject> pickable) {
 		// Collisions avec les obstacles
 		for(StaticObject obs : obstacles) {
 			if(Physics.rectangleCollision(getPosition(), getSize(), obs.getPosition(), obs.getSize())) {
@@ -79,19 +80,28 @@ public class Hero
 		
 		// Collisions avec les murs
 		// Pour celle-ci on fait une négation de la fonction de base afin de voir si le joueur est bien dans la zone de jeu
-		//TODO: valeurs de position de taille à revoir
-		if(!Physics.rectangleCollision(getPosition(), getSize(), new Vector2(0.1, 0.1), new Vector2(0.8, 0.8))) {
+		if(!Physics.rectangleCollision(getPosition(), getSize(), RoomInfos.POSITION_CENTER_OF_ROOM, RoomInfos.TILE_SIZE.scalarMultiplication(6))) {
 			position = old_pos;
 		}
 		
 		
-		// Collisions avec les monstres
-		
+		// Collisions avec les monstres - delay invicible a ajouter (2sec?)
+		for(Monster mob : mobs) {
+			if(Physics.rectangleCollision(getPosition(), getSize(), mob.getPosition(), mob.getSize())) {
+				health--;
+			}
+		}
 		
 		// Collisions avec les projectiles
+		for(Projectile proj : projectiles) {
+			if(Physics.rectangleCollision(getPosition(), getSize(), proj.getPosition(), proj.getSize())) {
+				health -= proj.getDamage();
+			}
+		}
 		
 		
 		// Collisions avec objets
+		// TODO: pièces, stuff etc
 		
 	}
 	
@@ -132,15 +142,6 @@ public class Hero
 			for(int i = 0; i < removeList.size(); i++) {
 				objects.remove(removeList.get(i));
 			}
-		}
-	}
-	
-	//map boundaries
-	private boolean inRoom(Vector2 position) {
-		if(position.getY() > 0.12 && position.getY() < 0.90 && position.getX() > 0.12 && position.getX() < 0.90) {
-			return true;
-		} else {
-			return false;
 		}
 	}
 	

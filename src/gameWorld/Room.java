@@ -24,6 +24,7 @@ public class Room
 	private ArrayList<StaticObject> obstacles;
 	private ArrayList<Monster> mobs;
 	private ArrayList<Projectile> proj;
+	private ArrayList<Projectile> enemy_proj;
 	private ArrayList<PickableObject> pickable;
 
 	public Room(Hero hero)
@@ -32,14 +33,15 @@ public class Room
 		this.groundTile = ImagePaths.DEFAULT_TILE;
 		
 		this.mobs = new ArrayList<Monster>(); //TEST
-		mobs.add(new Spider(new Vector2(0.5, 0.5)));
+		mobs.add(new Spider(new Vector2(0.3, 0.5)));
 		
 		this.proj = new ArrayList<Projectile>();
+		this.enemy_proj = new ArrayList<Projectile>();
+		
 		this.obstacles = new ArrayList<StaticObject>();
 		obstacles.add(new StaticObject(new Vector2(0.8, 0.3), hero.getSize(), ImagePaths.ROCK));
 		
 		this.pickable = new ArrayList<PickableObject>();
-		
 		pickable.add(new PickableObject(new Vector2(0.2, 0.8), RoomInfos.TILE_SIZE.scalarMultiplication(0.3), ImagePaths.DIME));
 		
 	}
@@ -59,35 +61,35 @@ public class Room
 	private void makeHeroPlay()
 	{
 		hero.updateGameObject();
-		hero.collision(obstacles, mobs, proj, pickable);
+		hero.collision(obstacles, mobs, enemy_proj, pickable);
 	}
 	
 	/**
 	 * Parcours la liste des mobs presents dans la piece, les fait avancer d'un tick
 	 */
 	private void makeMobsPlay() {
-		for(int i = 0; i < mobs.size(); i++) {
-			mobs.get(i).updateGameObject(); 
+		for(Monster m : mobs) {
+			m.updateGameObject(); 
 		}
 	}
 	
 	private void makeProjPlay() {
 		for(int i = 0; i < proj.size(); i++) {
-			proj.get(i).updateGameObject(); 
+			proj.get(i).updateGameObject();
+			//TODO: optimier car code moche
+			// Gestion reach
+			if(proj.get(i).getCount() >= proj.get(i).getReach()) {
+				proj.remove(proj.get(i));
+			}
+			// Si hors zone de jeu : kill
+			if(!Physics.rectangleCollision(proj.get(i).getPosition(), proj.get(i).getSize(), RoomInfos.POSITION_CENTER_OF_ROOM, RoomInfos.TILE_SIZE.scalarMultiplication(7))) {
+				proj.remove(proj.get(i));
+			}
+			
+			// Gestion collision avec monstres - problème : double boucle for ?
+			
 		}
 	}
-	
-//	private void collision() {
-//		Hero hero_cp = new Hero(hero); // On cree une copie pour ne pas modifier le vrai
-//		hero_cp.updateGameObject();
-//		for(StaticObject obs : obstacles) {
-//			// Si la prochaine position du hero est invalide, il ne bouge pas
-//			if(Physics.rectangleCollision(hero_cp.getPosition(), hero_cp.getSize(), obs.getPosition(), obs.getSize())) {
-//				hero.setCanMove(false);
-//				System.out.println(Physics.rectangleCollision(hero_cp.getPosition(), hero_cp.getSize(), obs.getPosition(), obs.getSize()));
-//			}
-//		}
-//	}
 	
 
 	/*
@@ -153,6 +155,8 @@ public class Room
 		
 		//draws pickable objects
 		for(PickableObject obj : pickable) obj.drawGameObject();
+
+		StdDraw.textLeft(0, 0.9, hero.getPosition().toString());
 		
 	}
 	
@@ -177,25 +181,25 @@ public class Room
 	 * TODO: ajouter un delay entre les tirs
 	 */
 	public void shootUp() {
-		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(0, 1), 0, 0, false);
+		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(0, 1), 0, 40);
 		proj.add(projectile_test);
 	}
 
 
 	public void shootDown() {
-		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(0, -1), 0, 0, false);
+		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(0, -1), 0, 40);
 		proj.add(projectile_test);
 	}
 
 
 	public void shootRight() {
-		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(1, 0), 0, 0, false);
+		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(1, 0), 0, 40);
 		proj.add(projectile_test);
 	}
 
 
 	public void shootLeft() {
-		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(-1, 0), 0, 0, false);
+		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(-1, 0), 0, 40);
 		proj.add(projectile_test);
 	}
 }

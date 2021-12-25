@@ -105,7 +105,7 @@ public class Vector2
 
 	public String toString()
 	{
-		return "(" + this.getX() + ", " + this.getY() + ")";
+		return "(" + Math.round(this.getX()*100.0)/100.0 + ", " + Math.round(this.getY()*100.0)/100.0 + ")";
 	}
 
 	/*

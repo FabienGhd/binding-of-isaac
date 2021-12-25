@@ -13,10 +13,10 @@ public class Projectile {
 	private Vector2 direction;
 	private int damage;
 	private int reach;
-	private boolean affect; // True : fait des degats au hero ; False : aux monstres
+	private int count;
 	
 	
-	public Projectile(Vector2 p, Vector2 s, String im, double spd, Vector2 dir, int dam, int r, boolean a)
+	public Projectile(Vector2 p, Vector2 s, String im, double spd, Vector2 dir, int dam, int r)
 	{
 		position = p;
 		size = s;
@@ -25,12 +25,13 @@ public class Projectile {
 		direction = dir;
 		damage = dam;
 		reach = r;
-		affect = a;
+		count = 0; // Pour gerer la reach
 	}
 	
 	public void updateGameObject()
 	{
 		move();
+		count ++;
 		//TODO: si balle touche/sort de l'écran/atteint son reach : on la supprime
 	}
 
@@ -113,6 +114,14 @@ public class Projectile {
 
 	public void setReach(int reach) {
 		this.reach = reach;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 	
 }
