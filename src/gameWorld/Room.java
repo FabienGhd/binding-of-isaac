@@ -50,8 +50,6 @@ public class Room
 	 */
 	public void updateRoom()
 	{
-		if(hero.getCanMove() == false) System.out.println(hero.getCanMove());
-		collision(); // On lance les detections de collision avant les mouvements
 		makeHeroPlay();
 		makeMobsPlay();
 		makeProjPlay(); // On pourra changer le nom de la fonction
@@ -61,6 +59,7 @@ public class Room
 	private void makeHeroPlay()
 	{
 		hero.updateGameObject();
+		hero.collision(obstacles, mobs, proj, pickable);
 	}
 	
 	/**
@@ -78,16 +77,17 @@ public class Room
 		}
 	}
 	
-	private void collision() {
-		Hero hero_cp = new Hero(hero); // On cree une copie pour ne pas modifier le vrai
-		hero_cp.updateGameObject();
-		for(StaticObject obs : obstacles) {
-			// Si la prochaine position du hero est invalide, il ne bouge pas
-			if(Physics.rectangleCollision(hero_cp.getPosition(), hero_cp.getSize(), obs.getPosition(), obs.getSize())) {
-				hero.setCanMove(false);
-			}
-		}
-	}
+//	private void collision() {
+//		Hero hero_cp = new Hero(hero); // On cree une copie pour ne pas modifier le vrai
+//		hero_cp.updateGameObject();
+//		for(StaticObject obs : obstacles) {
+//			// Si la prochaine position du hero est invalide, il ne bouge pas
+//			if(Physics.rectangleCollision(hero_cp.getPosition(), hero_cp.getSize(), obs.getPosition(), obs.getSize())) {
+//				hero.setCanMove(false);
+//				System.out.println(Physics.rectangleCollision(hero_cp.getPosition(), hero_cp.getSize(), obs.getPosition(), obs.getSize()));
+//			}
+//		}
+//	}
 	
 
 	/*
@@ -136,7 +136,7 @@ public class Room
 		
 		StdDraw.picture(0.7,0.7,ImagePaths.COIN); //TEST
 		
-		//Dessine tous les mobs de la pi�ce
+		//Dessine tous les mobs de la piece
 		for(int i = 0; i < mobs.size(); i++) {
 			mobs.get(i).drawGameObject();
 		}

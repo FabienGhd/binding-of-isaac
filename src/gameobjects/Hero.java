@@ -20,6 +20,7 @@ public class Hero
 	private int coin; 
 	private boolean canShoot;
 	private boolean canMove; // False si son prochain mouvement est invalide
+	private Vector2 old_pos;
 
 
 	public Hero(Vector2 position, Vector2 size, double speed, String imagePath, int health, int coin) 
@@ -49,20 +50,51 @@ public class Hero
 
 	public void updateGameObject()
 	{
-		if(canMove == true) move();
-		canMove = true;
+		move();
 	}
 
 	private void move()
 	{
+		old_pos = position;
 		Vector2 normalizedDirection = getNormalizedDirection();
 		Vector2 positionAfterMoving = getPosition().addVector(normalizedDirection);
-		
-		if(inRoom(positionAfterMoving)) {
-			setPosition(positionAfterMoving);
-		}
+		setPosition(positionAfterMoving);
 		direction = new Vector2();
 	}
+	
+	/**
+	 * Cette fonction gère toutes les collisions entre le personnage et les autres entités.
+	 * @param obstacles
+	 * @param mobs
+	 * @param proj
+	 * @param pickable
+	 */
+	public void collision(ArrayList<StaticObject> obstacles, ArrayList<Monster> mobs, ArrayList<Projectile> proj, ArrayList<PickableObject> pickable) {
+		// Collisions avec les obstacles
+		for(StaticObject obs : obstacles) {
+			if(Physics.rectangleCollision(getPosition(), getSize(), obs.getPosition(), obs.getSize())) {
+				position = old_pos;
+			}
+		}
+		
+		// Collisions avec les murs
+		// Pour celle-ci on fait une négation de la fonction de base afin de voir si le joueur est bien dans la zone de jeu
+		//TODO: valeurs de position de taille à revoir
+		if(!Physics.rectangleCollision(getPosition(), getSize(), new Vector2(0.1, 0.1), new Vector2(0.8, 0.8))) {
+			position = old_pos;
+		}
+		
+		
+		// Collisions avec les monstres
+		
+		
+		// Collisions avec les projectiles
+		
+		
+		// Collisions avec objets
+		
+	}
+	
 	
 	//coin values information: https://bindingofisaacrebirth.fandom.com/wiki/Coins
 	private void pickableObjects(ArrayList<PickableObject> objects) {
@@ -252,7 +284,5 @@ public class Hero
 
 	public void setCanMove(boolean canMove) {
 		this.canMove = canMove;
-	}
-	
-	
+	}	
 }
