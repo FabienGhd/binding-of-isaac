@@ -64,7 +64,7 @@ public class Room
 		hero.collision(obstacles, mobs, enemy_proj, pickable);
 	}
 	
-	/**
+	/*
 	 * Parcours la liste des mobs presents dans la piece, les fait avancer d'un tick
 	 */
 	private void makeMobsPlay() {
