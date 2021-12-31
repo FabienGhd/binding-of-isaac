@@ -1,5 +1,5 @@
-public class Dungeon {
+package gameWorld;
 
-    // Get average runtime of successful runs in seconds
-    func averageRuntimeInSeconds
+public class Dungeon {
+	
 }

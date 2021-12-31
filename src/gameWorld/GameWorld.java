@@ -10,12 +10,19 @@ public class GameWorld
 {
 	private Room currentRoom;
 	private Hero hero;
+	private Dungeon dungeon;
 
 	// A world needs a hero
 	public GameWorld(Hero hero)
 	{
 		this.hero = hero;
 		currentRoom = new Room(hero);
+		dungeon = generateDungeon();
+	}
+	
+	public Dungeon generateDungeon() {
+		Dungeon dung = new Dungeon();
+		return dung; //TODO		
 	}
 
 	public void processUserInput()

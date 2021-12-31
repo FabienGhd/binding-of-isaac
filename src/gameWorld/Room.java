@@ -68,26 +68,28 @@ public class Room
 	 * Parcours la liste des mobs presents dans la piece, les fait avancer d'un tick
 	 */
 	private void makeMobsPlay() {
-		for(Monster m : mobs) {
-			m.updateGameObject(); 
+		for(int i = 0; i < mobs.size(); i++) {
+			mobs.get(i).updateGameObject();
+			mobs.get(i).collision(proj);
+			
+			if(mobs.get(i).getHealth() == 0) mobs.remove(i);
 		}
 	}
 	
 	private void makeProjPlay() {
 		for(int i = 0; i < proj.size(); i++) {
 			proj.get(i).updateGameObject();
-			//TODO: optimier car code moche
+			
+			//TODO: optimiser car code moche
+			
 			// Gestion reach
 			if(proj.get(i).getCount() >= proj.get(i).getReach()) {
 				proj.remove(proj.get(i));
 			}
 			// Si hors zone de jeu : kill
-			if(!Physics.rectangleCollision(proj.get(i).getPosition(), proj.get(i).getSize(), RoomInfos.POSITION_CENTER_OF_ROOM, RoomInfos.TILE_SIZE.scalarMultiplication(7))) {
+			else if(!Physics.rectangleCollision(proj.get(i).getPosition(), proj.get(i).getSize(), RoomInfos.POSITION_CENTER_OF_ROOM, RoomInfos.TILE_SIZE.scalarMultiplication(7))) {
 				proj.remove(proj.get(i));
-			}
-			
-			// Gestion collision avec monstres - problème : double boucle for ?
-			
+			}			
 		}
 	}
 	
@@ -181,25 +183,25 @@ public class Room
 	 * TODO: ajouter un delay entre les tirs
 	 */
 	public void shootUp() {
-		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(0, 1), 0, 40);
+		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(0, 1), 1, 40);
 		proj.add(projectile_test);
 	}
 
 
 	public void shootDown() {
-		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(0, -1), 0, 40);
+		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(0, -1), 1, 40);
 		proj.add(projectile_test);
 	}
 
 
 	public void shootRight() {
-		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(1, 0), 0, 40);
+		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(1, 0), 1, 40);
 		proj.add(projectile_test);
 	}
 
 
 	public void shootLeft() {
-		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(-1, 0), 0, 40);
+		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(-1, 0), 1, 40);
 		proj.add(projectile_test);
 	}
 }

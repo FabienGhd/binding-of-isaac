@@ -67,7 +67,7 @@ public class Hero
 	 * Cette fonction gère toutes les collisions entre le personnage et les autres entités.
 	 * @param obstacles
 	 * @param mobs
-	 * @param proj
+	 * @param projectiles
 	 * @param pickable
 	 */
 	public void collision(ArrayList<StaticObject> obstacles, ArrayList<Monster> mobs, ArrayList<Projectile> projectiles, ArrayList<PickableObject> pickable) {
@@ -102,6 +102,9 @@ public class Hero
 		
 		// Collisions avec objets
 		// TODO: pièces, stuff etc
+		//for(PickableObject p : pickable) {
+		//	
+		//}
 		
 	}
 	

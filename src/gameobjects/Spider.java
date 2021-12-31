@@ -1,5 +1,8 @@
 package gameobjects;
 
+import java.util.ArrayList;
+
+import libraries.Physics;
 import libraries.Vector2;
 import resources.ImagePaths;
 import resources.SpiderInfos;
@@ -34,5 +37,20 @@ public class Spider extends Monster {
 		Vector2 normalizedDirection = getNormalizedDirection();
 		Vector2 positionAfterMoving = getPosition().addVector(normalizedDirection);
 		setPosition(positionAfterMoving);
+	}
+	
+	/*
+	 * @param obstacles
+	 * @param projectiles
+	 */
+	public void collision(ArrayList<StaticObject> obstacles, ArrayList<Projectile> projectiles) {
+		super.collision(projectiles);
+		
+		// Collisions avec les obstacles
+		for(StaticObject obs : obstacles) {
+			if(Physics.rectangleCollision(getPosition(), getSize(), obs.getPosition(), obs.getSize())) {
+				setPosition(getOld_pos());
+			}
+		}
 	}
 }

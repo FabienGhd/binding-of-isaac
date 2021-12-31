@@ -1,7 +1,11 @@
 package gameobjects;
 
+import java.util.ArrayList;
+
+import libraries.Physics;
 import libraries.StdDraw;
 import libraries.Vector2;
+import resources.RoomInfos;
 
 public abstract class Monster {
 	
@@ -12,6 +16,7 @@ public abstract class Monster {
 	private Vector2 direction;
 	private int damage;
 	private int health;
+	private Vector2 old_pos;
 
 
 	public Monster(Vector2 position)
@@ -25,6 +30,7 @@ public abstract class Monster {
 	 */
 	public void updateGameObject()
 	{
+		old_pos = position;
 		move();
 		//shoot()?
 	}
@@ -44,6 +50,28 @@ public abstract class Monster {
 		Vector2 normalizedVector = new Vector2(direction);
 		normalizedVector.euclidianNormalize(speed);
 		return normalizedVector;
+	}
+	
+	/**
+	 * Cette fonction gère toutes les collisions entre les monstres et les projectiles.
+	 * Les collisions avec les obstacles sont gérés dans les classes filles (car Fly passe au dessus).
+	 * @param projectiles
+	 */
+	public void collision(ArrayList<Projectile> projectiles) {
+		
+		// Collisions avec les murs
+		// Pour celle-ci on fait une négation de la fonction de base afin de voir si le joueur est bien dans la zone de jeu
+		if(!Physics.rectangleCollision(getPosition(), getSize(), RoomInfos.POSITION_CENTER_OF_ROOM, RoomInfos.TILE_SIZE.scalarMultiplication(6))) {
+			position = getOld_pos();
+		}
+		
+		// Collisions avec les projectiles
+		//TODO: add delay (ou supprimer projectile dès qu'il touche)
+		for(Projectile proj : projectiles) {
+			if(Physics.rectangleCollision(getPosition(), getSize(), proj.getPosition(), proj.getSize())) {
+				health -= proj.getDamage();
+			}
+		}
 	}
 	
 	
@@ -104,6 +132,14 @@ public abstract class Monster {
 
 	public void setHealth(int health) {
 		this.health = health;
+	}
+
+	public Vector2 getOld_pos() {
+		return old_pos;
+	}
+
+	public void setOld_pos(Vector2 old_pos) {
+		this.old_pos = old_pos;
 	}
 	
 	
