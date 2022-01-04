@@ -2,6 +2,7 @@ package gameWorld;
 
 import gameobjects.Hero;
 import libraries.StdDraw;
+import libraries.Vector2;
 import resources.Controls;
 import gameloop.Main;
 
@@ -10,19 +11,12 @@ public class GameWorld
 {
 	private Room currentRoom;
 	private Hero hero;
-	private Dungeon dungeon;
 
 	// A world needs a hero
 	public GameWorld(Hero hero)
 	{
 		this.hero = hero;
 		currentRoom = new Room(hero);
-		dungeon = generateDungeon();
-	}
-	
-	public Dungeon generateDungeon() {
-		Dungeon dung = new Dungeon();
-		return dung; //TODO		
 	}
 
 	public void processUserInput()
@@ -73,19 +67,19 @@ public class GameWorld
 	private void processOtherKeys() {
 		if (StdDraw.isKeyPressed(Controls.shootUp))
 		{
-			currentRoom.shootUp();
+			currentRoom.shoot(new Vector2(0, 1));
 		}
 		if (StdDraw.isKeyPressed(Controls.shootDown))
 		{
-			currentRoom.shootDown();
+			currentRoom.shoot(new Vector2(0, -1));
 		}
 		if (StdDraw.isKeyPressed(Controls.shootRight))
 		{
-			currentRoom.shootRight();
+			currentRoom.shoot(new Vector2(1, 0));
 		}
 		if (StdDraw.isKeyPressed(Controls.shootLeft))
 		{
-			currentRoom.shootLeft();
+			currentRoom.shoot(new Vector2(-1, 0));
 		}
 	}
 	

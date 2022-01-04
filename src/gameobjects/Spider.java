@@ -18,6 +18,7 @@ public class Spider extends Monster {
 		setSpeed(SpiderInfos.SPIDER_SPEED);
 		setDamage(SpiderInfos.SPIDER_DAMAGE);
 		setHealth(SpiderInfos.SPIDER_HEALTH);
+		setCollide(true);
 	}
 	
 	public void move() {
@@ -37,20 +38,5 @@ public class Spider extends Monster {
 		Vector2 normalizedDirection = getNormalizedDirection();
 		Vector2 positionAfterMoving = getPosition().addVector(normalizedDirection);
 		setPosition(positionAfterMoving);
-	}
-	
-	/*
-	 * @param obstacles
-	 * @param projectiles
-	 */
-	public void collision(ArrayList<StaticObject> obstacles, ArrayList<Projectile> projectiles) {
-		super.collision(projectiles);
-		
-		// Collisions avec les obstacles
-		for(StaticObject obs : obstacles) {
-			if(Physics.rectangleCollision(getPosition(), getSize(), obs.getPosition(), obs.getSize())) {
-				setPosition(getOld_pos());
-			}
-		}
 	}
 }

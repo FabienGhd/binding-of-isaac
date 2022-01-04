@@ -15,6 +15,7 @@ public class Fly extends Monster {
 		setSpeed(FlyInfos.FLY_SPEED);
 		setDamage(FlyInfos.FLY_DAMAGE);
 		setHealth(FlyInfos.FLY_HEALTH);
+		setCollide(false);
 	}
 	
 	public void move() {

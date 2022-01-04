@@ -17,6 +17,7 @@ public abstract class Monster {
 	private int damage;
 	private int health;
 	private Vector2 old_pos;
+	private boolean collide;
 
 
 	public Monster(Vector2 position)
@@ -57,21 +58,29 @@ public abstract class Monster {
 	 * Les collisions avec les obstacles sont gérés dans les classes filles (car Fly passe au dessus).
 	 * @param projectiles
 	 */
-	public void collision(ArrayList<Projectile> projectiles) {
+	public void collision(ArrayList<StaticObject> obstacles) {
+			
+		// Collisions avec les obstacles
+		for(StaticObject obs : obstacles) {
+			if(Physics.rectangleCollision(getPosition(), getSize(), obs.getPosition(), obs.getSize())) {
+				position = old_pos;
+			}
+		}
 		
 		// Collisions avec les murs
 		// Pour celle-ci on fait une négation de la fonction de base afin de voir si le joueur est bien dans la zone de jeu
 		if(!Physics.rectangleCollision(getPosition(), getSize(), RoomInfos.POSITION_CENTER_OF_ROOM, RoomInfos.TILE_SIZE.scalarMultiplication(6))) {
-			position = getOld_pos();
+			position = old_pos;
 		}
 		
-		// Collisions avec les projectiles
-		//TODO: add delay (ou supprimer projectile dès qu'il touche)
-		for(Projectile proj : projectiles) {
-			if(Physics.rectangleCollision(getPosition(), getSize(), proj.getPosition(), proj.getSize())) {
-				health -= proj.getDamage();
-			}
-		}
+		// Les collisions avec les projectiles sont gerees dans la classe Room
+	}
+	
+	/*
+	 * 
+	 */
+	public void attacked(int damage) {
+		health -= damage;
 	}
 	
 	
@@ -140,6 +149,14 @@ public abstract class Monster {
 
 	public void setOld_pos(Vector2 old_pos) {
 		this.old_pos = old_pos;
+	}
+
+	public boolean getCollide() {
+		return collide;
+	}
+
+	public void setCollide(boolean collide) {
+		this.collide = collide;
 	}
 	
 	

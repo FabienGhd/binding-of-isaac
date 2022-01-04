@@ -14,14 +14,16 @@ public class Hero
 {
 	private Vector2 position;
 	private Vector2 size;
+	private Vector2 old_pos;
+	private Vector2 direction;
 	private String imagePath;
 	private double speed;
-	private Vector2 direction;
 	private int health;
 	private int coin; 
+	private int delay_invincible;
+	private int delay_shoot;
 	private boolean canShoot;
-	private boolean canMove; // False si son prochain mouvement est invalide
-	private Vector2 old_pos;
+	private boolean invincible;
 
 
 	public Hero(Vector2 position, Vector2 size, double speed, String imagePath, int health, int coin) 
@@ -34,24 +36,24 @@ public class Hero
 		this.health = health;
 		this.coin = coin;
 		this.canShoot = true;
-		this.canMove = true;
-	}
-	
-	// Nouveau constructeur : copie ; il servira pour les collisions.
-	public Hero(Hero h) {
-		this.position = h.position;
-		this.size = h.size;
-		this.speed = h.speed;
-		this.imagePath = h.imagePath;
-		this.direction = new Vector2();
-		this.health = h.health;
-		this.canShoot = true;
-		this.canMove = true;
+		this.invincible = false;
+		this.delay_invincible = -1;
+		this.delay_shoot = -1;
 	}
 
 	public void updateGameObject()
 	{
 		move();
+		
+
+		// Gestion invincibilité 
+		if(delay_invincible >= 0 && delay_invincible < 60) {delay_invincible++;} // TODO: ajouter variable globale
+		else {delay_invincible = -1; invincible = false;} // Nous utiliserons delay = -1 pour le cheat
+		
+		if(delay_shoot >= 0 && delay_shoot < 20) {delay_shoot++;} // TODO: ajouter variable globale
+		else {delay_shoot = -1; canShoot = true;} // Nous utiliserons delay = -1 pour le cheat
+		
+		
 	}
 
 	private void move()
@@ -71,6 +73,7 @@ public class Hero
 	 * @param pickable
 	 */
 	public void collision(ArrayList<StaticObject> obstacles, ArrayList<Monster> mobs, ArrayList<Projectile> projectiles, ArrayList<PickableObject> pickable) {
+		
 		// Collisions avec les obstacles
 		for(StaticObject obs : obstacles) {
 			if(Physics.rectangleCollision(getPosition(), getSize(), obs.getPosition(), obs.getSize())) {
@@ -88,14 +91,14 @@ public class Hero
 		// Collisions avec les monstres - delay invicible a ajouter (2sec?)
 		for(Monster mob : mobs) {
 			if(Physics.rectangleCollision(getPosition(), getSize(), mob.getPosition(), mob.getSize())) {
-				health--;
+				attacked(1);
 			}
 		}
 		
 		// Collisions avec les projectiles
 		for(Projectile proj : projectiles) {
 			if(Physics.rectangleCollision(getPosition(), getSize(), proj.getPosition(), proj.getSize())) {
-				health -= proj.getDamage();
+				attacked(proj.getDamage());
 			}
 		}
 		
@@ -148,6 +151,14 @@ public class Hero
 		}
 	}
 	
+	
+	public void attacked(int damage) {
+		if(!invincible) {
+			health -= damage;
+			delay_invincible = 0;
+			invincible = true;
+		}
+	}
 
 	public void drawGameObject()
 	{
@@ -182,6 +193,8 @@ public class Hero
 		}
 	}
 
+	
+	
 	/*
 	 * Moving from key inputs. Direction vector is later normalised.
 	 */
@@ -213,6 +226,8 @@ public class Hero
 	}
 
 
+	
+	
 	/*
 	 * Getters and Setters
 	 */
@@ -282,11 +297,44 @@ public class Hero
 		this.canShoot = canShoot;
 	}
 
-	public boolean getCanMove() {
-		return canMove;
+	public int getCoin() {
+		return coin;
 	}
 
-	public void setCanMove(boolean canMove) {
-		this.canMove = canMove;
-	}	
+	public void setCoin(int coin) {
+		this.coin = coin;
+	}
+
+	public Vector2 getOld_pos() {
+		return old_pos;
+	}
+
+	public void setOld_pos(Vector2 old_pos) {
+		this.old_pos = old_pos;
+	}
+
+	public int getDelay_invincible() {
+		return delay_invincible;
+	}
+
+	public void setDelay_invincible(int delay_invincible) {
+		this.delay_invincible = delay_invincible;
+	}
+
+	public int getDelay_shoot() {
+		return delay_shoot;
+	}
+
+	public void setDelay_shoot(int delay_shoot) {
+		this.delay_shoot = delay_shoot;
+	}
+
+	public boolean getInvincible() {
+		return invincible;
+	}
+
+	public void setInvincible(boolean invincible) {
+		this.invincible = invincible;
+	}
+	
 }

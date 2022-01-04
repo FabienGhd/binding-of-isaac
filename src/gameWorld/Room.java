@@ -70,7 +70,7 @@ public class Room
 	private void makeMobsPlay() {
 		for(int i = 0; i < mobs.size(); i++) {
 			mobs.get(i).updateGameObject();
-			mobs.get(i).collision(proj);
+			mobs.get(i).collision(obstacles);
 			
 			if(mobs.get(i).getHealth() == 0) mobs.remove(i);
 		}
@@ -86,10 +86,21 @@ public class Room
 			if(proj.get(i).getCount() >= proj.get(i).getReach()) {
 				proj.remove(proj.get(i));
 			}
+			
 			// Si hors zone de jeu : kill
 			else if(!Physics.rectangleCollision(proj.get(i).getPosition(), proj.get(i).getSize(), RoomInfos.POSITION_CENTER_OF_ROOM, RoomInfos.TILE_SIZE.scalarMultiplication(7))) {
 				proj.remove(proj.get(i));
-			}			
+			}
+			
+			// Collision avec monstres
+			else {
+				for(int j = 0; j < mobs.size(); j++) {
+					if(Physics.rectangleCollision(proj.get(i).getPosition(), proj.get(i).getSize(), mobs.get(j).getPosition(), mobs.get(j).getSize())) {
+						mobs.get(j).attacked(proj.get(i).getDamage());
+						proj.remove(proj.get(i));
+					}
+				}
+			}
 		}
 	}
 	
@@ -203,5 +214,15 @@ public class Room
 	public void shootLeft() {
 		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(-1, 0), 1, 40);
 		proj.add(projectile_test);
+	}
+	
+	
+	public void shoot(Vector2 dir) {
+		if(hero.getCanShoot()) {
+			Projectile shot = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed()*1.5, dir, 1, 40);
+			proj.add(shot);
+			hero.setCanShoot(false);
+			hero.setDelay_shoot(0);
+		}
 	}
 }
