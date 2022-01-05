@@ -6,6 +6,7 @@ import java.util.List;
 import libraries.StdDraw;
 import libraries.Vector2;
 import resources.ImagePaths;
+import resources.ObjectInfos;
 import resources.RoomInfos;
 import libraries.Physics;
 
@@ -24,17 +25,6 @@ public class Hero
 	private boolean canShoot;
 	private boolean invincible;
 	
-	public static int PENNY = 1;
-	public static int DIME = 10;
-	public static int NICKEL = 5;
-	public static int HALF_HEART = 1;
-	public static int FULL_HEART = 2;
-
-
-
-
-
-
 
 	public Hero(Vector2 position, Vector2 size, double speed, String imagePath, int health, int coin) 
 	{
@@ -134,23 +124,23 @@ public class Hero
 				if(obj != null && Physics.rectangleCollision(getPosition(), getSize(), obj.getPosition(), obj.getSize())) {
 					
 					if(obj.getImagePath() ==  "images/Penny.png") {
-						this.coin += PENNY;
+						this.coin += ObjectInfos.PENNY;
 						removeList.add(obj);
 					}	
 					else if(obj.getImagePath() == "images/Dime.png") {
-						this.coin =+ DIME;
+						this.coin =+ ObjectInfos.DIME;
 						removeList.add(obj);
 					}
 					else if(obj.getImagePath() == "images/Nickel.png") {
-						this.coin += NICKEL;
+						this.coin += ObjectInfos.NICKEL;
 						removeList.add(obj);
 					}
 					else if(obj.getImagePath() == "images/Half_Red_Heart.png" && this.health <= 5) {
-						this.health += HALF_HEART;
+						this.health += ObjectInfos.HALF_HEART;
 						removeList.add(obj);
 					}
 					else if(obj.getImagePath() == "images/Red_Heart.png" && this.health <= 4) {
-						this.health += FULL_HEART;
+						this.health += ObjectInfos.FULL_HEART;
 						removeList.add(obj);
 					}
 				} 
