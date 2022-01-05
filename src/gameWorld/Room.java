@@ -13,6 +13,7 @@ import gameobjects.Spider;
 import libraries.Physics;
 import libraries.StdDraw;
 import libraries.Vector2;
+import resources.DoorInfos;
 import resources.ImagePaths;
 import resources.RoomInfos;
 import gameobjects.StaticObject;
@@ -164,6 +165,17 @@ public class Room
 			//top walls (x=i, y=nb_tiles-1)
 			StdDraw.picture(positionFromTileIndex(i, RoomInfos.NB_TILES-1).getX(),positionFromTileIndex(i, RoomInfos.NB_TILES-1).getY(), ImagePaths.WALL_TOP, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 		}
+		
+		//draws doors
+		//right
+		StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, 4).getX(), positionFromTileIndex(RoomInfos.NB_TILES - 1, 4).getY(), ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+		//up
+		StdDraw.picture(positionFromTileIndex(4, RoomInfos.NB_TILES - 1).getX(), positionFromTileIndex(4, RoomInfos.NB_TILES - 1).getY(), ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+		//down
+		StdDraw.picture(positionFromTileIndex(4,0).getX(), positionFromTileIndex(4,0).getY(), ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+		//left
+		StdDraw.picture(positionFromTileIndex(0,4).getX(), positionFromTileIndex(0,4).getY(), ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+
 		
 		hero.drawGameObject();
 		
