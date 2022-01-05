@@ -11,4 +11,6 @@ public class RoomInfos
 	public static final Vector2 HALF_TILE_SIZE = new Vector2(TILE_WIDTH, TILE_HEIGHT).scalarMultiplication(0.5);
 	
 	public static final Vector2 POSITION_CENTER_OF_ROOM = new Vector2(0.5, 0.5);
+	public static final Vector2 POSITION_TOP_OF_ROOM = new Vector2(0.4, 0.8);
+	public static final Vector2 POSITION_BOTTOM_OF_ROOM = new Vector2(0.5, 0.2);
 }

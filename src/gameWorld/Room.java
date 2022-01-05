@@ -1,9 +1,11 @@
 package gameWorld;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import gameobjects.Fly;
+import gameobjects.Gaper;
 import gameobjects.Hero;
 import gameobjects.Monster;
 import gameobjects.Projectile;
@@ -21,6 +23,8 @@ public class Room
 {
 	private Hero hero;
 	private String groundTile; //tile for background
+	private LinkedList<Door> doors; //maybe set 'public' cuz we're gonna use it another class? 
+	
 	private ArrayList<StaticObject> obstacles;
 	private ArrayList<Monster> mobs;
 	private ArrayList<Projectile> proj;
@@ -31,9 +35,13 @@ public class Room
 	{
 		this.hero = hero;
 		this.groundTile = ImagePaths.DEFAULT_TILE;
+		this.doors = new LinkedList<Door>(); //we choose LinkedList because 
+											//there will be a really dynamic system (lots of deletion and addition) for each room entered
+		
 		
 		this.mobs = new ArrayList<Monster>(); //TEST
 		mobs.add(new Spider(new Vector2(0.3, 0.5)));
+		mobs.add(new Gaper(RoomInfos.POSITION_TOP_OF_ROOM));
 		
 		this.proj = new ArrayList<Projectile>();
 		this.enemy_proj = new ArrayList<Projectile>();
@@ -44,6 +52,10 @@ public class Room
 		this.pickable = new ArrayList<PickableObject>();
 		pickable.add(new PickableObject(new Vector2(0.2, 0.8), RoomInfos.TILE_SIZE.scalarMultiplication(0.3), ImagePaths.DIME));
 		
+	}
+	
+	public LinkedList<Door> Door() {
+		return doors;
 	}
 
 
@@ -157,14 +169,14 @@ public class Room
 		
 		StdDraw.picture(0.7,0.7,ImagePaths.COIN); //TEST
 		
-		//Dessine tous les mobs de la piece
-		for(int i = 0; i < mobs.size(); i++) {
-			mobs.get(i).drawGameObject();
+		//Draws all the mobs for the room
+		for(Monster mob : mobs) {
+			mob.drawGameObject();
 		}
 		
-		//Dessine tous les projectiles
-		for(int i = 0; i < proj.size(); i++) {
-			proj.get(i).drawGameObject();
+		//Draws all the projectiles
+		for(Projectile tear : proj) {
+			tear.drawGameObject();
 		}
 		
 		//draws the obstacles
@@ -173,7 +185,9 @@ public class Room
 		}
 		
 		//draws pickable objects
-		for(PickableObject obj : pickable) obj.drawGameObject();
+		for(PickableObject obj : pickable) {
+			obj.drawGameObject();
+		}
 
 		StdDraw.textLeft(0, 0.9, hero.getPosition().toString());
 		
