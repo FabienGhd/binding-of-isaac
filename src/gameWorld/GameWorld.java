@@ -32,7 +32,7 @@ public class GameWorld
 
 	public void updateGameObjects()
 	{
-		nextDoor();
+		generateDoor();
 		currentRoom.updateRoom();
 	}
 
@@ -41,16 +41,12 @@ public class GameWorld
 		currentRoom.drawRoom();
 	}
 	
-	public void nextDoor() {
-		double hx = (double)Math.round(hero.getPosition().getX()*10)/10;
-		double hy = (double)Math.round(hero.getPosition().getY()*10)/10;	
+	//TODO
+	public void generateDoor() {
+		Vector2 hero_pos = hero.getPosition();
+
 		for (Door door : currentRoom.Door()) {
-			double dx = (double)Math.round(door.getPosition().getX()*10)/10;
-			double dy = (double)Math.round(door.getPosition().getY()*10)/10;
-			if (hx == dx && hy == dy) {
-				this.currentRoom = door.getNextRoom();
-				hero.setPosition(new Vector2(0.5,0.1));
-			}
+			
 		}
 	}
 
