@@ -50,6 +50,7 @@ public class ImagePaths
 	public static final String CORNER_TOP_RIGHT = "images/corner_top_right.png";
 	public static final String CORNER_BOTTOM_LEFT = "images/corner_bottom_left.png";
 	public static final String CORNER_BOTTOM_RIGHT = "images/corner_bottom_right.png";
+	public static final String BROWN = "images/tile1.png";
 
 	//walls
 	public static final String WALL_DEFAULT = "images/wall_default1.png";
@@ -57,6 +58,7 @@ public class ImagePaths
 	public static final String WALL_TOP = "images/wall_default3.png";
 	public static final String WALL_RIGHT = "images/wall_default4.png";
 	public static final String WALL_BOTTOM = "images/wall_default5.png";
+	
 
 
 

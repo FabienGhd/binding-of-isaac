@@ -9,7 +9,6 @@ import resources.ImagePaths;
 import resources.RoomInfos;
 import libraries.Physics;
 
-
 public class Hero
 {
 	private Vector2 position;
@@ -24,6 +23,17 @@ public class Hero
 	private int delay_shoot;
 	private boolean canShoot;
 	private boolean invincible;
+	
+	public static int PENNY = 1;
+	public static int DIME = 10;
+	public static int NICKEL = 5;
+	public static int HALF_HEART = 1;
+	public static int FULL_HEART = 2;
+
+
+
+
+
 
 
 	public Hero(Vector2 position, Vector2 size, double speed, String imagePath, int health, int coin) 
@@ -46,7 +56,7 @@ public class Hero
 		move();
 		
 
-		// Gestion invincibilité 
+		// Gestion invincibilitï¿½ 
 		if(delay_invincible >= 0 && delay_invincible < 60) {delay_invincible++;} // TODO: ajouter variable globale
 		else {delay_invincible = -1; invincible = false;} // Nous utiliserons delay = -1 pour le cheat
 		
@@ -66,7 +76,7 @@ public class Hero
 	}
 	
 	/**
-	 * Cette fonction gère toutes les collisions entre le personnage et les autres entités.
+	 * Cette fonction gï¿½re toutes les collisions entre le personnage et les autres entitï¿½s.
 	 * @param obstacles
 	 * @param mobs
 	 * @param projectiles
@@ -82,7 +92,7 @@ public class Hero
 		}
 		
 		// Collisions avec les murs
-		// Pour celle-ci on fait une négation de la fonction de base afin de voir si le joueur est bien dans la zone de jeu
+		// Pour celle-ci on fait une nï¿½gation de la fonction de base afin de voir si le joueur est bien dans la zone de jeu
 		if(!Physics.rectangleCollision(getPosition(), getSize(), RoomInfos.POSITION_CENTER_OF_ROOM, RoomInfos.TILE_SIZE.scalarMultiplication(6))) {
 			position = old_pos;
 		}
@@ -104,7 +114,7 @@ public class Hero
 		
 		
 		// Collisions avec objets
-		// TODO: pièces, stuff etc
+		// TODO: piï¿½ces, stuff etc
 		//for(PickableObject p : pickable) {
 		//	
 		//}
@@ -118,35 +128,37 @@ public class Hero
 			
 			List<PickableObject> removeList = new ArrayList<PickableObject>();
 			
-			for(int i = 0; i < objects.size(); i++) {
+			for(PickableObject obj : objects) {
 				
-				if(objects.get(i) != null) {
+				//we call Physics in order to know if the hero touches the pickable objects
+				if(obj != null && Physics.rectangleCollision(getPosition(), getSize(), obj.getPosition(), obj.getSize())) {
 					
-					if(objects.get(i).getImagePath() ==  "images/Penny.png") {
-						this.coin += 1;
-						removeList.add(objects.get(i));
+					if(obj.getImagePath() ==  "images/Penny.png") {
+						this.coin += PENNY;
+						removeList.add(obj);
 					}	
-					else if(objects.get(i).getImagePath() == "images/Dime.png") {
-						this.coin =+ 10;
-						removeList.add(objects.get(i));
+					else if(obj.getImagePath() == "images/Dime.png") {
+						this.coin =+ DIME;
+						removeList.add(obj);
 					}
-					else if(objects.get(i).getImagePath() == "images/Nickel.png") {
-						this.coin += 5;
-						removeList.add(objects.get(i));
+					else if(obj.getImagePath() == "images/Nickel.png") {
+						this.coin += NICKEL;
+						removeList.add(obj);
 					}
-					else if(objects.get(i).getImagePath() == "images/Half_Red_Heart.png" && this.health <= 5) {
-						this.health += 1;
-						removeList.add(objects.get(i));
+					else if(obj.getImagePath() == "images/Half_Red_Heart.png" && this.health <= 5) {
+						this.health += HALF_HEART;
+						removeList.add(obj);
 					}
-					else if(objects.get(i).getImagePath() == "images/Red_Heart.png" && this.health <= 4) {
-						this.health += 2;
-						removeList.add(objects.get(i));
+					else if(obj.getImagePath() == "images/Red_Heart.png" && this.health <= 4) {
+						this.health += FULL_HEART;
+						removeList.add(obj);
 					}
 				} 
 			}
-			//we delete what has been picked 
-			for(int i = 0; i < removeList.size(); i++) {
-				objects.remove(removeList.get(i));
+			
+			//we then delete what has been picked 
+			for(PickableObject obj : removeList) {
+				objects.remove(obj);
 			}
 		}
 	}
