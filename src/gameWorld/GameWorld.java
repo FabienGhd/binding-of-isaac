@@ -4,6 +4,7 @@ import gameobjects.Hero;
 import libraries.StdDraw;
 import libraries.Vector2;
 import resources.Controls;
+import resources.RoomInfos;
 import gameloop.Main;
 
 
@@ -41,12 +42,20 @@ public class GameWorld
 		currentRoom.drawRoom();
 	}
 	
-	//TODO
+	//TODO 
+	//temporary cuz not organized at all, jsut to test real quick
 	public void generateDoor() {
 		Vector2 hero_pos = hero.getPosition();
+		Vector2 up = new Vector2(0.5,0.87);
+		Vector2 left = new Vector2(0.13,0.5);
+		Vector2 right = new Vector2(0.87,0.5);
+		Vector2 down = new Vector2(0.5,0.13);
 
 		for (Door door : currentRoom.Door()) {
-			
+			if(hero_pos == up || hero_pos == right ||hero_pos == left || hero_pos == down) {
+				this.currentRoom = door.getNextRoom();
+				hero.setPosition(RoomInfos.POSITION_CENTER_OF_ROOM);
+			}
 		}
 	}
 
