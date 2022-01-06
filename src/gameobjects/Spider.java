@@ -9,10 +9,10 @@ import resources.SpiderInfos;
 
 public class Spider extends Monster {
 	
-	private int count = 0; // A supprimer après
+	private int count = 0; // A supprimer aprï¿½s
 
-	public Spider(Vector2 position) {
-		super(position);
+	public Spider(Vector2 position, Hero hero) {
+		super(position, hero);
 		setSize(SpiderInfos.SPIDER_SIZE);
 		setImagePath(ImagePaths.SPIDER);
 		setSpeed(SpiderInfos.SPIDER_SPEED);

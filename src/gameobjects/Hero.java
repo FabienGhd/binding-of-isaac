@@ -105,52 +105,23 @@ public class Hero
 		
 		// Collisions avec objets
 		// TODO: pi�ces, stuff etc
-		//for(PickableObject p : pickable) {
-		//	
-		//}
+			
+		List<PickableObject> removeList = new ArrayList<PickableObject>();
 		
+		for(PickableObject obj : pickable) {
+			
+			//we call Physics in order to know if the hero touches the pickable objects
+			if(Physics.rectangleCollision(getPosition(), getSize(), obj.getPosition(), obj.getSize())) {
+				this.coin += obj.getCoins();
+				obj.setTaken(true);
+			}
+		}
 	}
 	
 	
 	//coin values information: https://bindingofisaacrebirth.fandom.com/wiki/Coins
 	private void pickableObjects(ArrayList<PickableObject> objects) {
-		if(objects != null) { 
-			
-			List<PickableObject> removeList = new ArrayList<PickableObject>();
-			
-			for(PickableObject obj : objects) {
-				
-				//we call Physics in order to know if the hero touches the pickable objects
-				if(obj != null && Physics.rectangleCollision(getPosition(), getSize(), obj.getPosition(), obj.getSize())) {
-					
-					if(obj.getImagePath() ==  "images/Penny.png") {
-						this.coin += ObjectInfos.PENNY;
-						removeList.add(obj);
-					}	
-					else if(obj.getImagePath() == "images/Dime.png") {
-						this.coin =+ ObjectInfos.DIME;
-						removeList.add(obj);
-					}
-					else if(obj.getImagePath() == "images/Nickel.png") {
-						this.coin += ObjectInfos.NICKEL;
-						removeList.add(obj);
-					}
-					else if(obj.getImagePath() == "images/Half_Red_Heart.png" && this.health <= 5) {
-						this.health += ObjectInfos.HALF_HEART;
-						removeList.add(obj);
-					}
-					else if(obj.getImagePath() == "images/Red_Heart.png" && this.health <= 4) {
-						this.health += ObjectInfos.FULL_HEART;
-						removeList.add(obj);
-					}
-				} 
-			}
-			
-			//we then delete what has been picked 
-			for(PickableObject obj : removeList) {
-				objects.remove(obj);
-			}
-		}
+		
 	}
 	
 	

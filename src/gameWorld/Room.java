@@ -41,8 +41,9 @@ public class Room
 		
 		
 		this.mobs = new ArrayList<Monster>(); //TEST
-		mobs.add(new Spider(new Vector2(0.3, 0.5)));
-		mobs.add(new Gaper(RoomInfos.POSITION_TOP_OF_ROOM));
+		mobs.add(new Spider(new Vector2(0.3, 0.5), hero));
+		mobs.add(new Gaper(RoomInfos.POSITION_TOP_OF_ROOM, hero));
+		mobs.add(new Fly(new Vector2(0.8, 0.5), hero));
 		
 		this.proj = new ArrayList<Projectile>();
 		this.enemy_proj = new ArrayList<Projectile>();
@@ -51,7 +52,7 @@ public class Room
 		obstacles.add(new StaticObject(new Vector2(0.8, 0.3), hero.getSize(), ImagePaths.ROCK));
 		
 		this.pickable = new ArrayList<PickableObject>();
-		pickable.add(new PickableObject(new Vector2(0.2, 0.8), RoomInfos.TILE_SIZE.scalarMultiplication(0.3), ImagePaths.DIME));
+		pickable.add(new PickableObject(new Vector2(0.2, 0.8), RoomInfos.TILE_SIZE.scalarMultiplication(0.3), ImagePaths.DIME, false, 10, 0));
 		
 	}
 	
@@ -68,6 +69,7 @@ public class Room
 		makeHeroPlay();
 		makeMobsPlay();
 		makeProjPlay(); // On pourra changer le nom de la fonction
+		makeObjPlay();
 	}
 
 
@@ -105,6 +107,7 @@ public class Room
 				proj.remove(proj.get(i));
 			}
 			
+			//TODO: fix out of bounds, add removeList
 			// Collision avec monstres
 			else {
 				for(int j = 0; j < mobs.size(); j++) {
@@ -114,6 +117,18 @@ public class Room
 					}
 				}
 			}
+		}
+	}
+	
+	public void makeObjPlay() {
+		List<PickableObject> removeList = new ArrayList<PickableObject>();
+		
+		for(PickableObject obj: pickable) {
+			if(obj.isTaken()) removeList.add(obj);
+		}
+		
+		for(PickableObject obj: removeList) {
+			pickable.remove(obj);
 		}
 	}
 	
@@ -166,7 +181,7 @@ public class Room
 			StdDraw.picture(positionFromTileIndex(i, RoomInfos.NB_TILES-1).getX(),positionFromTileIndex(i, RoomInfos.NB_TILES-1).getY(), ImagePaths.WALL_TOP, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 		}
 		
-		//draws doors
+		//test - draws the 4 doors
 		//right
 		StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, 4).getX(), positionFromTileIndex(RoomInfos.NB_TILES - 1, 4).getY(), ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 		//up
@@ -222,36 +237,12 @@ public class Room
 
 	
 	/**
-	 * Fonctions qui gerent les entrees clavier pour tirer un projectile
+	 * Fonction qui gere les entrees clavier pour tirer un projectile
 	 * TODO: ajouter un delay entre les tirs
-	 */
-	public void shootUp() {
-		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(0, 1), 1, 40);
-		proj.add(projectile_test);
-	}
-
-
-	public void shootDown() {
-		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(0, -1), 1, 40);
-		proj.add(projectile_test);
-	}
-
-
-	public void shootRight() {
-		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(1, 0), 1, 40);
-		proj.add(projectile_test);
-	}
-
-
-	public void shootLeft() {
-		Projectile projectile_test = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed(), new Vector2(-1, 0), 1, 40);
-		proj.add(projectile_test);
-	}
-	
-	
+	 */	
 	public void shoot(Vector2 dir) {
 		if(hero.getCanShoot()) {
-			Projectile shot = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed()*1.5, dir, 1, 40);
+			Projectile shot = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed()*1.5, dir, 1, 20);
 			proj.add(shot);
 			hero.setCanShoot(false);
 			hero.setDelay_shoot(0);

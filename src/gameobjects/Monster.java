@@ -18,16 +18,18 @@ public abstract class Monster {
 	private int health;
 	private Vector2 old_pos;
 	private boolean collide;
+	private Hero hero;
 
 
-	public Monster(Vector2 position)
+	public Monster(Vector2 position, Hero hero)
 	{
 		this.position = position;
 		this.direction = new Vector2();
+		this.hero = hero;
 	}
 	
 	/**
-	 * Les 4 prochaines fonctions sont une simple copie des fonctions de 'Hero', à voir si il faut les modifier un peu
+	 * Les 4 prochaines fonctions sont une simple copie des fonctions de 'Hero', ï¿½ voir si il faut les modifier un peu
 	 */
 	public void updateGameObject()
 	{
@@ -36,7 +38,7 @@ public abstract class Monster {
 		//shoot()?
 	}
 	
-	// Chaque type de monstre a sa façon de se déplacer, on spécifiera leurs mouvements dans leur classe
+	// Chaque type de monstre a sa faï¿½on de se dï¿½placer, on spï¿½cifiera leurs mouvements dans leur classe
 	abstract void move();
 
 	public void drawGameObject()
@@ -54,21 +56,21 @@ public abstract class Monster {
 	}
 	
 	/**
-	 * Cette fonction gère toutes les collisions entre les monstres et les projectiles.
-	 * Les collisions avec les obstacles sont gérés dans les classes filles (car Fly passe au dessus).
+	 * Cette fonction gï¿½re toutes les collisions entre les monstres et les projectiles.
+	 * Les collisions avec les obstacles sont gï¿½rï¿½s dans les classes filles (car Fly passe au dessus).
 	 * @param projectiles
 	 */
 	public void collision(ArrayList<StaticObject> obstacles) {
 			
-		// Collisions avec les obstacles
+		// Collisions avec les obstacles; Les mouches survolents
 		for(StaticObject obs : obstacles) {
-			if(Physics.rectangleCollision(getPosition(), getSize(), obs.getPosition(), obs.getSize())) {
+			if(Physics.rectangleCollision(getPosition(), getSize(), obs.getPosition(), obs.getSize()) && getCollide()) {
 				position = old_pos;
 			}
 		}
 		
 		// Collisions avec les murs
-		// Pour celle-ci on fait une négation de la fonction de base afin de voir si le joueur est bien dans la zone de jeu
+		// Pour celle-ci on fait une nï¿½gation de la fonction de base afin de voir si le joueur est bien dans la zone de jeu
 		if(!Physics.rectangleCollision(getPosition(), getSize(), RoomInfos.POSITION_CENTER_OF_ROOM, RoomInfos.TILE_SIZE.scalarMultiplication(6))) {
 			position = old_pos;
 		}
@@ -157,6 +159,14 @@ public abstract class Monster {
 
 	public void setCollide(boolean collide) {
 		this.collide = collide;
+	}
+
+	public Hero getHero() {
+		return hero;
+	}
+
+	public void setHero(Hero hero) {
+		this.hero = hero;
 	}
 	
 	

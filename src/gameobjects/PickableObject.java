@@ -7,11 +7,18 @@ public class PickableObject {
 	private Vector2 position;
 	private Vector2 size;
 	private String imagePath;
+	private boolean taken;
+	private int coins;
+	private int health;
 	
-	public PickableObject(Vector2 position, Vector2 size, String imagePath) {
+	
+	public PickableObject(Vector2 position, Vector2 size, String imagePath, boolean taken, int coins, int health) {
 		this.position = position;
 		this.size = size;
 		this.imagePath = imagePath;
+		this.taken = taken;
+		this.coins = coins;
+		this.health = health;
 	}
 	
 	public void drawGameObject() {
@@ -41,6 +48,30 @@ public class PickableObject {
 
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
+	}
+
+	public boolean isTaken() {
+		return taken;
+	}
+
+	public void setTaken(boolean taken) {
+		this.taken = taken;
+	}
+
+	public int getCoins() {
+		return coins;
+	}
+
+	public void setCoins(int coins) {
+		this.coins = coins;
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
 	}
 	
 }

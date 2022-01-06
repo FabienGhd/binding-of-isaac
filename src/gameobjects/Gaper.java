@@ -7,8 +7,8 @@ public class Gaper extends Monster {
 	
 	private int count = 0;
 		
-	public Gaper(Vector2 position) {
-		super(position);
+	public Gaper(Vector2 position, Hero hero) {
+		super(position, hero);
 		setSize(GaperInfos.GAPER_SIZE);
 		setImagePath(ImagePaths.GAPER);
 		setSpeed(GaperInfos.GAPER_SPEED);
