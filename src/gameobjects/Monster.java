@@ -11,12 +11,14 @@ public abstract class Monster {
 	
 	private Vector2 position;
 	private Vector2 size;
-	private String imagePath;
-	private double speed;
+	private Vector2 old_pos;
 	private Vector2 direction;
+	private String imagePath;
+	
+	private double speed;
 	private int damage;
 	private int health;
-	private Vector2 old_pos;
+	
 	private boolean collide;
 	private Hero hero;
 
@@ -40,6 +42,8 @@ public abstract class Monster {
 	
 	// Chaque type de monstre a sa fa�on de se d�placer, on sp�cifiera leurs mouvements dans leur classe
 	abstract void move();
+	
+	abstract void attack();
 
 	public void drawGameObject()
 	{
@@ -78,9 +82,7 @@ public abstract class Monster {
 		// Les collisions avec les projectiles sont gerees dans la classe Room
 	}
 	
-	/*
-	 * 
-	 */
+
 	public void attacked(int damage) {
 		health -= damage;
 	}

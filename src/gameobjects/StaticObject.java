@@ -7,11 +7,15 @@ public class StaticObject {
 	private Vector2 position;
 	private Vector2 size;
 	private String imagePath;
+	private int damage; // degats infliges (pour piques)
+	private boolean block; // bloque le passage (pour rocher)
 	
-	public StaticObject(Vector2 position, Vector2 size, String imagePath) 	{
+	public StaticObject(Vector2 position, Vector2 size, String imagePath, int d, boolean b) 	{
 		this.position = position;
 		this.size = size;
 		this.imagePath = imagePath;
+		this.damage = d;
+		this.block = b;
 	}
 	
 	public void drawGameObject() {
@@ -42,10 +46,22 @@ public class StaticObject {
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
-	
-	
-	
-	
+
+	public int getDamage() {
+		return damage;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
+	public boolean doBlock() {
+		return block;
+	}
+
+	public void setBlock(boolean block) {
+		this.block = block;
+	}
 	
 
 }

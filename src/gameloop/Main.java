@@ -22,7 +22,8 @@ public class Main
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException
 	{
 		// Hero, world and display initialisation.
-		Hero isaac = new Hero(RoomInfos.POSITION_CENTER_OF_ROOM, HeroInfos.ISAAC_SIZE, HeroInfos.ISAAC_SPEED, ImagePaths.ISAAC, 1, 10);
+		Hero isaac = new Hero(RoomInfos.POSITION_CENTER_OF_ROOM, HeroInfos.ISAAC_SIZE, HeroInfos.ISAAC_SPEED, 
+				ImagePaths.ISAAC, HeroInfos.HEALTH, HeroInfos.COINS, HeroInfos.DAMAGE, HeroInfos.DAMAGE, HeroInfos.PROJECTILE_SPEED);
 		GameWorld world = new GameWorld(isaac);				
 		initializeDisplay();
 		

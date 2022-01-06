@@ -49,7 +49,7 @@ public class Room
 		this.enemy_proj = new ArrayList<Projectile>();
 		
 		this.obstacles = new ArrayList<StaticObject>();
-		obstacles.add(new StaticObject(new Vector2(0.8, 0.3), hero.getSize(), ImagePaths.ROCK));
+		obstacles.add(new StaticObject(new Vector2(0.8, 0.3), hero.getSize(), ImagePaths.ROCK, 0, true));
 		
 		this.pickable = new ArrayList<PickableObject>();
 		pickable.add(new PickableObject(new Vector2(0.2, 0.8), RoomInfos.TILE_SIZE.scalarMultiplication(0.3), ImagePaths.DIME, false, 10, 0));
@@ -87,7 +87,7 @@ public class Room
 			mobs.get(i).updateGameObject();
 			mobs.get(i).collision(obstacles);
 			
-			if(mobs.get(i).getHealth() == 0) mobs.remove(i);
+			if(mobs.get(i).getHealth() == 0) mobs.remove(i); // Mort mob
 		}
 	}
 	
@@ -242,7 +242,7 @@ public class Room
 	 */	
 	public void shoot(Vector2 dir) {
 		if(hero.getCanShoot()) {
-			Projectile shot = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getSpeed()*1.5, dir, 1, 20);
+			Projectile shot = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getProjectile_speed(), dir, hero.getDamage(), hero.getReach());
 			proj.add(shot);
 			hero.setCanShoot(false);
 			hero.setDelay_shoot(0);

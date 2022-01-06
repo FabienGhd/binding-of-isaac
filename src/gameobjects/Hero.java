@@ -1,7 +1,6 @@
 package gameobjects;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import libraries.StdDraw;
 import libraries.Vector2;
@@ -17,26 +16,39 @@ public class Hero
 	private Vector2 old_pos;
 	private Vector2 direction;
 	private String imagePath;
+	
 	private double speed;
 	private int health;
+	private int max_health;
 	private int coin; 
-	private int delay_invincible;
-	private int delay_shoot;
+	private int damage; // Degats des larmes
+	private int reach;
+	private double projectile_speed;
+	
 	private boolean canShoot;
 	private boolean invincible;
 	
+	private int delay_invincible;
+	private int delay_shoot;
+	
 
-	public Hero(Vector2 position, Vector2 size, double speed, String imagePath, int health, int coin) 
+	public Hero(Vector2 position, Vector2 size, double sp, String imPath, int h, int c, int d, int r, double proj_sp) 
 	{
 		this.position = position;
 		this.size = size;
-		this.speed = speed;
-		this.imagePath = imagePath;
 		this.direction = new Vector2();
-		this.health = health;
-		this.coin = coin;
+		this.imagePath = imPath;
+
+		this.speed = sp;
+		this.health = h;
+		this.coin = c;
+		this.damage = d;
+		this.reach = r;
+		this.projectile_speed = proj_sp;
+		
 		this.canShoot = true;
 		this.invincible = false;
+		
 		this.delay_invincible = -1;
 		this.delay_shoot = -1;
 	}
@@ -76,8 +88,9 @@ public class Hero
 		
 		// Collisions avec les obstacles
 		for(StaticObject obs : obstacles) {
-			if(Physics.rectangleCollision(getPosition(), getSize(), obs.getPosition(), obs.getSize())) {
+			if(obs.doBlock() && Physics.rectangleCollision(getPosition(), getSize(), obs.getPosition(), obs.getSize())) {
 				position = old_pos;
+				attacked(obs.getDamage());
 			}
 		}
 		
@@ -102,31 +115,19 @@ public class Hero
 			}
 		}
 		
-		
-		// Collisions avec objets
-		// TODO: pi�ces, stuff etc
-			
-		List<PickableObject> removeList = new ArrayList<PickableObject>();
-		
 		for(PickableObject obj : pickable) {
 			
 			//we call Physics in order to know if the hero touches the pickable objects
 			if(Physics.rectangleCollision(getPosition(), getSize(), obj.getPosition(), obj.getSize())) {
 				this.coin += obj.getCoins();
-				obj.setTaken(true);
+				obj.setTaken(true); // On supprime l'objet dans la classe Room
 			}
 		}
 	}
 	
 	
-	//coin values information: https://bindingofisaacrebirth.fandom.com/wiki/Coins
-	private void pickableObjects(ArrayList<PickableObject> objects) {
-		
-	}
-	
-	
 	public void attacked(int damage) {
-		if(!invincible) {
+		if(!invincible && damage > 0) {
 			health -= damage;
 			delay_invincible = 0;
 			invincible = true;
@@ -309,5 +310,38 @@ public class Hero
 	public void setInvincible(boolean invincible) {
 		this.invincible = invincible;
 	}
+
+	public int getMax_health() {
+		return max_health;
+	}
+
+	public void setMax_health(int max_health) {
+		this.max_health = max_health;
+	}
+
+	public int getDamage() {
+		return damage;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
+	public int getReach() {
+		return reach;
+	}
+
+	public void setReach(int reach) {
+		this.reach = reach;
+	}
+
+	public double getProjectile_speed() {
+		return projectile_speed;
+	}
+
+	public void setProjectile_speed(double projectile_speed) {
+		this.projectile_speed = projectile_speed;
+	}
+	
 	
 }

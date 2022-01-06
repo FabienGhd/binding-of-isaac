@@ -6,6 +6,9 @@ import resources.ImagePaths;
 
 public class Fly extends Monster {
 	
+	private int projectile_damage;
+	private double projectile_speed;
+	private int reach;
 
 	public Fly(Vector2 position, Hero hero) {
 		super(position, hero);
@@ -15,6 +18,10 @@ public class Fly extends Monster {
 		setDamage(FlyInfos.FLY_DAMAGE);
 		setHealth(FlyInfos.FLY_HEALTH);
 		setCollide(false);
+		projectile_damage = FlyInfos.PROJECTILE_DAMAGE;
+		projectile_speed = FlyInfos.PROJECTILE_SPEED;
+		reach = FlyInfos.REACH;
+		
 	}
 	
 	public void move() {
