@@ -242,7 +242,8 @@ public class Room
 	 */	
 	public void shoot(Vector2 dir) {
 		if(hero.getCanShoot()) {
-			Projectile shot = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4), ImagePaths.TEAR, hero.getProjectile_speed(), dir, hero.getDamage(), hero.getReach());
+			Projectile shot = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4),
+					ImagePaths.TEAR, hero.getProjectile_speed(), dir, hero.getDamage(), hero.getReach());
 			proj.add(shot);
 			hero.setCanShoot(false);
 			hero.setDelay_shoot(0);

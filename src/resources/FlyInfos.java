@@ -9,8 +9,8 @@ public class FlyInfos {
 	public static final int FLY_HEALTH = 3;
 	public static final int FLY_DAMAGE = 1;
 
-	public static final int PROJECTILE_DAMAGE;
-	public static final double PROJECTILE_SPEED;
-	public static final int REACH;
+	public static final int PROJECTILE_DAMAGE = 1;
+	public static final double PROJECTILE_SPEED = 1;
+	public static final int REACH = 1;
 
 }

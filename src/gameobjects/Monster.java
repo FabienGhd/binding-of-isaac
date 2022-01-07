@@ -43,7 +43,7 @@ public abstract class Monster {
 	// Chaque type de monstre a sa fa�on de se d�placer, on sp�cifiera leurs mouvements dans leur classe
 	abstract void move();
 	
-	abstract void attack();
+	//abstract void attack();
 
 	public void drawGameObject()
 	{
