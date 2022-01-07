@@ -9,6 +9,13 @@ public class Controls
 	public static int goRight = Keybinding.keycodeOf('d');
 	public static int goLeft = Keybinding.keycodeOf('q');
 	
+	//cheat controls
+	public static int cheatKill = Keybinding.keycodeOf('k');
+	public static int cheatSpeed = Keybinding.keycodeOf('l');
+	public static int cheatMoney = Keybinding.keycodeOf('o');
+	public static int cheatDamage = Keybinding.keycodeOf('p');
+	public static int invincible = Keybinding.keycodeOf('i');
+	
 	//public static int startAudio = Keybinding.keycodeOf('m');
 	
 	// New controls for shooting option

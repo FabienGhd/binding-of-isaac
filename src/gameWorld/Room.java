@@ -28,9 +28,10 @@ public class Room
 	
 	private ArrayList<StaticObject> obstacles;
 	private ArrayList<Monster> mobs;
-	private ArrayList<Projectile> proj;
+	private ArrayList<Projectile> projs;
 	private ArrayList<Projectile> enemy_proj;
 	private ArrayList<PickableObject> pickable;
+	
 
 	public Room(Hero hero)
 	{
@@ -45,7 +46,7 @@ public class Room
 		mobs.add(new Gaper(RoomInfos.POSITION_TOP_OF_ROOM, hero));
 		mobs.add(new Fly(new Vector2(0.8, 0.5), hero));
 		
-		this.proj = new ArrayList<Projectile>();
+		this.projs = new ArrayList<Projectile>();
 		this.enemy_proj = new ArrayList<Projectile>();
 		
 		this.obstacles = new ArrayList<StaticObject>();
@@ -83,37 +84,36 @@ public class Room
 	 * Parcours la liste des mobs presents dans la piece, les fait avancer d'un tick
 	 */
 	private void makeMobsPlay() {
-		for(int i = 0; i < mobs.size(); i++) {
-			mobs.get(i).updateGameObject();
-			mobs.get(i).collision(obstacles);
+		for(Monster mob : mobs) {
+			mob.updateGameObject();
+			mob.collision(obstacles);
 			
-			if(mobs.get(i).getHealth() == 0) mobs.remove(i); // Mort mob
+			if(mob.getHealth() == 0) mobs.remove(mob); // Mort mob
 		}
 	}
 	
 	private void makeProjPlay() {
-		for(int i = 0; i < proj.size(); i++) {
-			proj.get(i).updateGameObject();
+		for(Projectile proj : projs) {
+			proj.updateGameObject();
 			
-			//TODO: optimiser car code moche
-			
+						
 			// Gestion reach
-			if(proj.get(i).getCount() >= proj.get(i).getReach()) {
-				proj.remove(proj.get(i));
+			if(proj.getCount() >= proj.getReach()) {
+				projs.remove(proj);
 			}
 			
 			// Si hors zone de jeu : kill
-			else if(!Physics.rectangleCollision(proj.get(i).getPosition(), proj.get(i).getSize(), RoomInfos.POSITION_CENTER_OF_ROOM, RoomInfos.TILE_SIZE.scalarMultiplication(7))) {
-				proj.remove(proj.get(i));
+			else if(!Physics.rectangleCollision(proj.getPosition(), proj.getSize(), RoomInfos.POSITION_CENTER_OF_ROOM, RoomInfos.TILE_SIZE.scalarMultiplication(7))) {
+				projs.remove(proj);
 			}
 			
 			//TODO: fix out of bounds, add removeList
 			// Collision avec monstres
 			else {
 				for(int j = 0; j < mobs.size(); j++) {
-					if(Physics.rectangleCollision(proj.get(i).getPosition(), proj.get(i).getSize(), mobs.get(j).getPosition(), mobs.get(j).getSize())) {
-						mobs.get(j).attacked(proj.get(i).getDamage());
-						proj.remove(proj.get(i));
+					if(Physics.rectangleCollision(proj.getPosition(), proj.getSize(), mobs.get(j).getPosition(), mobs.get(j).getSize())) {
+						mobs.get(j).attacked(proj.getDamage());
+						projs.remove(proj);
 					}
 				}
 			}
@@ -129,6 +129,18 @@ public class Room
 		
 		for(PickableObject obj: removeList) {
 			pickable.remove(obj);
+		}
+	}
+	
+	//used for cheating
+	public void removeAllMonsters() {
+		List<Monster> removeList = new ArrayList<Monster>();
+		for(Monster mob : mobs) {
+			removeList.add(mob);
+		}
+		//we actually remove them all here
+		for(Monster mob : removeList) {
+			mobs.remove(mob);
 		}
 	}
 	
@@ -202,7 +214,7 @@ public class Room
 		}
 		
 		//Draws all the projectiles
-		for(Projectile tear : proj) {
+		for(Projectile tear : projs) {
 			tear.drawGameObject();
 		}
 		
@@ -244,9 +256,11 @@ public class Room
 		if(hero.getCanShoot()) {
 			Projectile shot = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4),
 					ImagePaths.TEAR, hero.getProjectile_speed(), dir, hero.getDamage(), hero.getReach());
-			proj.add(shot);
+			projs.add(shot);
 			hero.setCanShoot(false);
 			hero.setDelay_shoot(0);
 		}
 	}
+	
+	
 }

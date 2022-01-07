@@ -4,6 +4,7 @@ import gameobjects.Hero;
 import libraries.StdDraw;
 import libraries.Vector2;
 import resources.Controls;
+import resources.HeroInfos;
 import resources.RoomInfos;
 import gameloop.Main;
 
@@ -23,7 +24,8 @@ public class GameWorld
 	public void processUserInput()
 	{
 		processKeysForMovement();
-		processOtherKeys();
+		processKeysForShooting();
+		processKeysForCheating();
 	}
 
 	public boolean gameOver()
@@ -83,7 +85,41 @@ public class GameWorld
 		}
 	}
 	
-	private void processOtherKeys() {
+	private void processKeysForCheating() {
+		
+		if(StdDraw.isKeyPressed(Controls.cheatMoney)) {
+			hero.setCoin(hero.getCoin() + 10);
+		}
+		
+		if (StdDraw.isKeyPressed(Controls.cheatSpeed)) {
+			//so that the speedCheat is not permanent, we just have to click again on the the 'l' to make the hero back at his speed
+			if (hero.getSpeed() != HeroInfos.ISAAC_SPEED + 0.04) { 
+				hero.setSpeed(hero.getSpeed() + 0.04);
+			} else {
+				hero.setSpeed(HeroInfos.ISAAC_SPEED);
+			}
+		}
+		
+		if(StdDraw.isKeyPressed(Controls.cheatKill)) { //makes all monsters disappear;
+			currentRoom.removeAllMonsters();
+		}
+		
+		if(StdDraw.isKeyPressed(Controls.invincible)) {
+			if(hero.getHealth() != HeroInfos.HEALTH + 500) {
+				hero.setHealth(hero.getHealth() + 500);
+			} else {
+				hero.setHealth(HeroInfos.HEALTH);
+			}
+		}
+		
+		//TODO: fix tears first 
+		if(StdDraw.isKeyPressed(Controls.cheatKill)) {
+			
+		}
+		
+	}
+	
+	private void processKeysForShooting() {
 		if (StdDraw.isKeyPressed(Controls.shootUp))
 		{
 			currentRoom.shoot(new Vector2(0, 1));
@@ -101,5 +137,7 @@ public class GameWorld
 			currentRoom.shoot(new Vector2(-1, 0));
 		}
 	}
+	
+	
 	
 }
