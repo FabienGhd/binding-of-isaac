@@ -29,13 +29,16 @@ public class GameWorld
 		processKeysForCheating();
 	}
 
+	//TODO
 	public boolean gameOver()
 	{
+		/*
 		if(hero.getHealth() == 0) {
 			StdDraw.picture(0.7, 0.7, ImagePaths.GAMEOVER_SCREEN); //test
 			System.out.println("game over man");
 			return true;
 		}
+		*/
 		return false;
 		
 	}

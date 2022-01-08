@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import libraries.StdDraw;
 import libraries.Vector2;
+import resources.HeroInfos;
 import resources.ImagePaths;
 import resources.ObjectInfos;
 import resources.RoomInfos;
@@ -139,19 +140,37 @@ public class Hero
 		StdDraw.picture(getPosition().getX(), getPosition().getY(), getImagePath(), getSize().getX(), getSize().getY(),
 				0);
 		
-		StdDraw.setPenColor(StdDraw.RED);
-		StdDraw.text(0.2, 0.025, "Health : " + this.health);
+
+		//HEARTS status bar 
+		if (this.health > 0) {
+		
+			for (int i = 0; i < HeroInfos.HEALTH / 2; i++) {
+				
+				int even = (i + 1) * 2;
+				int odd = even - 1;
+				double left = 0.04 * (4 + i);
+				double bottom = 0.025;
+				
+				if (this.health >= even) {
+					StdDraw.picture(left, bottom, ImagePaths.HEART_HUD);
+				} else if (this.health >= odd) { 
+					StdDraw.picture(left, bottom, ImagePaths.HALF_HEART_HUD);
+				} else {
+					StdDraw.picture(left, bottom, ImagePaths.EMPTY_HEART_HUD);
+				}
+	
+			} //end for loop
+		} else {
+			//when game over 
+			for (int i = 0; i < HeroInfos.HEALTH / 2; i++) {
+				StdDraw.picture(0.04 * (4 + i), 0.025, ImagePaths.EMPTY_HEART_HUD);
+			}
+		}
+		
+		//COINS status bar 
+		StdDraw.picture(0.155, 0.065, ImagePaths.COIN);
 		StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE);
-		StdDraw.text(0.2, 0.055, "Coins : " + this.coin);
-		
-		
-		//TODO: hearts, display
-		/* -- HEARTS --
-		Isaac's health is 6 
-		1 full heart gives 2 health points 
-		1/2 hearts gives 1 health point
-		*/
-		
+		StdDraw.text(0.2, 0.065, "" + this.coin);
 		
 	}
 
