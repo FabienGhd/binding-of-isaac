@@ -5,6 +5,7 @@ import libraries.StdDraw;
 import libraries.Vector2;
 import resources.Controls;
 import resources.HeroInfos;
+import resources.ImagePaths;
 import resources.RoomInfos;
 import gameloop.Main;
 
@@ -30,7 +31,13 @@ public class GameWorld
 
 	public boolean gameOver()
 	{
+		if(hero.getHealth() == 0) {
+			StdDraw.picture(0.7, 0.7, ImagePaths.GAMEOVER_SCREEN); //test
+			System.out.println("game over man");
+			return true;
+		}
 		return false;
+		
 	}
 
 	public void updateGameObjects()
@@ -104,6 +111,7 @@ public class GameWorld
 			currentRoom.removeAllMonsters();
 		}
 		
+		//same system as speed
 		if(StdDraw.isKeyPressed(Controls.invincible)) {
 			if(hero.getHealth() != HeroInfos.HEALTH + 500) {
 				hero.setHealth(hero.getHealth() + 500);

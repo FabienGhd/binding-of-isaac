@@ -145,26 +145,14 @@ public class Hero
 		StdDraw.text(0.2, 0.055, "Coins : " + this.coin);
 		
 		
+		//TODO: hearts, display
 		/* -- HEARTS --
 		Isaac's health is 6 
 		1 full heart gives 2 health points 
 		1/2 hearts gives 1 health point
 		*/
 		
-		if(this.health != 0) { //TODO 
-			
-			//draw full hearts is Isaac's health is an even number 
-			boolean full = (this.health % 2 == 0);
-			int fullHearts = this.health / 2; //number of full hearts isaac has
-			//draw half hearts if Isaac's health is a odd number
-			boolean half = (this.health % 2 == 1);
-			
-			if(half) {
-				StdDraw.picture(0.25, 0.75, ImagePaths.HALF_HEART_HUD); //TEST - random coordinates 
-			} else {
-				StdDraw.picture(0.05, 0.95, ImagePaths.EMPTY_HEART_HUD);
-			}
-		}
+		
 	}
 
 	

@@ -27,7 +27,7 @@ public class Main
 		GameWorld world = new GameWorld(isaac);				
 		initializeDisplay();
 		
-		
+
 		//french welcoming message
 		File welcomeFR = new File("sounds/welcomeFR.wav");
 		AudioInputStream audioStreamFR = AudioSystem.getAudioInputStream(welcomeFR);
@@ -49,6 +49,9 @@ public class Main
 		backgroundClip.open(audio);
 		FloatControl gainControl = (FloatControl) backgroundClip.getControl(FloatControl.Type.MASTER_GAIN);
 		gainControl.setValue(-29.0f); // Reduces volume by 29 decibels.
+		
+		
+		
 	
 		// Main loop of the game - remove the comments to have a background music and/or a welcoming message in whichever language you want
 		while (!world.gameOver())

@@ -40,6 +40,7 @@ public class ImagePaths
 	public static final String STIGMATA = "images/Stigmata.png";
 
 	public static final String WIN_SCREEN = "images/win.jpg";
+	public static final String GAMEOVER_SCREEN = "images/game_over_image.jpg";
 	public static final String LOSE_SCREEN = "images/lose.png";
 	
 	//we need to add some images ourselves for the background
