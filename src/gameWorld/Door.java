@@ -4,7 +4,7 @@ import libraries.Vector2;
 
 public class Door {
 	private Room nextRoom;
-	private Vector2 position;
+	private Vector2 position; //Changer en int? 0: Haut ; 1: Droite ; 2 : Bas ; ..
 	private Vector2 size;
 	private String imagePath;
 	

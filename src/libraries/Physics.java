@@ -32,5 +32,4 @@ public class Physics
 		}
 		return true;
 	}
-	//TODO: Faire une autre fonction qui renvoie un tableau de 4 booleans
 }

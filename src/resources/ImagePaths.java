@@ -3,6 +3,7 @@ package resources;
 public class ImagePaths
 {
 	public static final String ISAAC = "images/Isaac.png";
+	public static final String ISAAC_TRANSPARENT = "images/TransparentIsaac.png";
 	public static final String MAGDALENE = "images/Magdalene.png";
 
 	public static final String TEAR = "images/tear.png";

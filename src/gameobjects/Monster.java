@@ -68,7 +68,7 @@ public abstract class Monster {
 			
 		// Collisions avec les obstacles; Les mouches survolents
 		for(StaticObject obs : obstacles) {
-			if(Physics.rectangleCollision(getPosition(), getSize(), obs.getPosition(), obs.getSize()) && getCollide()) {
+			if(obs.doBlock() && Physics.rectangleCollision(getPosition(), getSize(), obs.getPosition(), obs.getSize()) && getCollide()) {
 				position = old_pos;
 			}
 		}

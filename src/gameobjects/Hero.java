@@ -16,7 +16,9 @@ public class Hero
 	private Vector2 size;
 	private Vector2 old_pos;
 	private Vector2 direction;
+	
 	private String imagePath;
+	private String transparentPath;
 	
 	private double speed;
 	private int health;
@@ -58,16 +60,7 @@ public class Hero
 	public void updateGameObject()
 	{
 		move();
-		
-
-		// Gestion invincibilit� 
-		if(delay_invincible >= 0 && delay_invincible < 60) {delay_invincible++;} // TODO: ajouter variable globale
-		else if(delay_invincible >= 60) {delay_invincible = -1; invincible = false;} // Nous utiliserons delay = -1 pour le cheat
-		
-		if(delay_shoot >= 0 && delay_shoot < 20) {delay_shoot++;} // TODO: ajouter variable globale
-		else {delay_shoot = -1; canShoot = true;}
-		System.out.println(delay_invincible + " " + invincible);
-		
+		manageDelay();
 	}
 
 	private void move()
@@ -131,6 +124,16 @@ public class Hero
 		}
 	}
 	
+	public void manageDelay() {
+		// Gestion invincibilite
+		if(delay_invincible >= 0 && delay_invincible < 60) {delay_invincible++;} // TODO: ajouter variable globale
+		else if(delay_invincible >= 60) {delay_invincible = -1; invincible = false;} // Nous utiliserons delay = -1 pour le cheat
+		
+		// Gestion delai shoot
+		if(delay_shoot >= 0 && delay_shoot < 20) {delay_shoot++;} // TODO: ajouter variable globale
+		else {delay_shoot = -1; canShoot = true;}
+	}
+	
 	
 	public void attacked(int damage) {
 		if(!invincible && damage > 0) {
@@ -142,10 +145,13 @@ public class Hero
 
 	public void drawGameObject()
 	{
-		StdDraw.picture(getPosition().getX(), getPosition().getY(), getImagePath(), getSize().getX(), getSize().getY(),
-				0);
-		
+		String imPath = getImagePath();
+		if(invincible) imPath = ImagePaths.ISAAC_TRANSPARENT;
+		StdDraw.picture(getPosition().getX(), getPosition().getY(), imPath, getSize().getX(), getSize().getY(), 0);
+		hudDraw();
+	}
 
+	public void hudDraw() {
 		//HEARTS status bar 
 		if (this.health > 0) {
 		
@@ -165,8 +171,9 @@ public class Hero
 				}
 	
 			} //end for loop
-		} else {
-			//when game over 
+		} 
+		//when game over 
+		else {
 			for (int i = 0; i < HeroInfos.HEALTH / 2; i++) {
 				StdDraw.picture(0.04 * (4 + i), 0.025, ImagePaths.EMPTY_HEART_HUD);
 			}
@@ -176,9 +183,7 @@ public class Hero
 		StdDraw.picture(0.155, 0.065, ImagePaths.COIN);
 		StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE);
 		StdDraw.text(0.2, 0.065, "" + this.coin);
-		
 	}
-
 	
 	
 	/*

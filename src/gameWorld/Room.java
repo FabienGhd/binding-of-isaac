@@ -223,7 +223,6 @@ public class Room
 		StdDraw.picture(positionFromTileIndex(0,4).getX(), positionFromTileIndex(0,4).getY(), ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 
 		
-		hero.drawGameObject();
 		
 		//Draws all the mobs for the room
 		for(Monster mob : mobs) {
@@ -244,7 +243,9 @@ public class Room
 		for(PickableObject obj : pickable) {
 			obj.drawGameObject();
 		}
-
+		
+		hero.drawGameObject();
+		
 		StdDraw.textLeft(0, 0.9, hero.getPosition().toString()); //TODO: suppr plus tard
 		
 	}
