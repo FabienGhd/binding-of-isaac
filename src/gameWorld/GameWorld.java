@@ -115,6 +115,7 @@ public class GameWorld
 		}
 		
 		//same system as speed
+		// A CHANGER
 		if(StdDraw.isKeyPressed(Controls.invincible)) {
 			if(hero.getHealth() != HeroInfos.HEALTH + 500) {
 				hero.setHealth(hero.getHealth() + 500);

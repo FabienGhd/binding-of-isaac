@@ -9,7 +9,9 @@ import gameobjects.Gaper;
 import gameobjects.Hero;
 import gameobjects.Monster;
 import gameobjects.Projectile;
+import gameobjects.Rock;
 import gameobjects.Spider;
+import gameobjects.Spikes;
 import libraries.Physics;
 import libraries.StdDraw;
 import libraries.Vector2;
@@ -50,7 +52,8 @@ public class Room
 		this.enemy_proj = new ArrayList<Projectile>();
 		
 		this.obstacles = new ArrayList<StaticObject>();
-		obstacles.add(new StaticObject(new Vector2(0.8, 0.3), hero.getSize(), ImagePaths.ROCK, 0, true));
+		obstacles.add(new Rock(new Vector2(0.8, 0.3), hero.getSize()));
+		obstacles.add(new Spikes(new Vector2(0.3, 0.3), hero.getSize()));
 		
 		this.pickable = new ArrayList<PickableObject>();
 		pickable.add(new PickableObject(new Vector2(0.2, 0.8), RoomInfos.TILE_SIZE.scalarMultiplication(0.3), ImagePaths.DIME, false, 10, 0));
@@ -84,39 +87,50 @@ public class Room
 	 * Parcours la liste des mobs presents dans la piece, les fait avancer d'un tick
 	 */
 	private void makeMobsPlay() {
+		List<Monster> removeList = new ArrayList<Monster>();
+		
 		for(Monster mob : mobs) {
 			mob.updateGameObject();
 			mob.collision(obstacles);
 			
-			if(mob.getHealth() == 0) mobs.remove(mob); // Mort mob
+			if(mob.getHealth() == 0) removeList.add(mob); // Mort mob
+		}
+		
+		for(Monster mob: removeList) {
+			mobs.remove(mob);
 		}
 	}
 	
 	private void makeProjPlay() {
+		List<Projectile> removeList = new ArrayList<Projectile>();
 		for(Projectile proj : projs) {
 			proj.updateGameObject();
 			
 						
 			// Gestion reach
 			if(proj.getCount() >= proj.getReach()) {
-				projs.remove(proj);
+				removeList.add(proj);
 			}
 			
 			// Si hors zone de jeu : kill
 			else if(!Physics.rectangleCollision(proj.getPosition(), proj.getSize(), RoomInfos.POSITION_CENTER_OF_ROOM, RoomInfos.TILE_SIZE.scalarMultiplication(7))) {
-				projs.remove(proj);
+				removeList.add(proj);
 			}
 			
-			//TODO: fix out of bounds, add removeList
 			// Collision avec monstres
 			else {
 				for(int j = 0; j < mobs.size(); j++) {
 					if(Physics.rectangleCollision(proj.getPosition(), proj.getSize(), mobs.get(j).getPosition(), mobs.get(j).getSize())) {
 						mobs.get(j).attacked(proj.getDamage());
-						projs.remove(proj);
+						removeList.add(proj);
 					}
 				}
 			}
+		}
+		
+		// Pour eviter l'erreur 'ConcurrentModification'
+		for(Projectile proj: removeList) {
+			projs.remove(proj);
 		}
 	}
 	
@@ -134,14 +148,7 @@ public class Room
 	
 	//used for cheating
 	public void removeAllMonsters() {
-		List<Monster> removeList = new ArrayList<Monster>();
-		for(Monster mob : mobs) {
-			removeList.add(mob);
-		}
-		//we actually remove them all here
-		for(Monster mob : removeList) {
-			mobs.remove(mob);
-		}
+		mobs.clear();
 	}
 	
 

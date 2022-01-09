@@ -61,11 +61,11 @@ public class Hero
 
 		// Gestion invincibilit� 
 		if(delay_invincible >= 0 && delay_invincible < 60) {delay_invincible++;} // TODO: ajouter variable globale
-		else {delay_invincible = -1; invincible = false;} // Nous utiliserons delay = -1 pour le cheat
+		else if(delay_invincible >= 60) {delay_invincible = -1; invincible = false;} // Nous utiliserons delay = -1 pour le cheat
 		
 		if(delay_shoot >= 0 && delay_shoot < 20) {delay_shoot++;} // TODO: ajouter variable globale
-		else {delay_shoot = -1; canShoot = true;} // Nous utiliserons delay = -1 pour le cheat
-		
+		else {delay_shoot = -1; canShoot = true;}
+		System.out.println(delay_invincible + " " + invincible);
 		
 	}
 
@@ -89,9 +89,10 @@ public class Hero
 		
 		// Collisions avec les obstacles
 		for(StaticObject obs : obstacles) {
-			if(obs.doBlock() && Physics.rectangleCollision(getPosition(), getSize(), obs.getPosition(), obs.getSize())) {
-				position = old_pos;
+			if(Physics.rectangleCollision(getPosition(), getSize(), obs.getPosition(), obs.getSize())) {
 				attacked(obs.getDamage());
+				
+				if(obs.doBlock()) position = old_pos;
 			}
 		}
 		

@@ -10,7 +10,7 @@ public class HeroInfos
 	public static final int HEALTH = 6;
 	public static final int COINS = 0;
 	public static final int DAMAGE = 1;
-	public static final int REACH = 20; // Nombre de ticks avant depop
+	public static final int REACH = 30; // Nombre de ticks avant depop
 	public static final double PROJECTILE_SPEED = ISAAC_SPEED*1.5;
 	
 }

@@ -1,5 +1,6 @@
-/gameWorld/
-/resources/
-/gameloop/
 /gameobjects/
-/game_over_image.jpg
+/libraries/
+/resources/
+/gameWorld/
+/pickableObjects/
+/gameloop/
