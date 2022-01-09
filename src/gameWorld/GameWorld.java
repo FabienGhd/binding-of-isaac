@@ -5,8 +5,10 @@ import libraries.StdDraw;
 import libraries.Vector2;
 import resources.Controls;
 import resources.HeroInfos;
-import resources.ImagePaths;
 import resources.RoomInfos;
+
+import java.util.Date;
+
 import gameloop.Main;
 
 
@@ -14,12 +16,14 @@ public class GameWorld
 {
 	private Room currentRoom;
 	private Hero hero;
+	private long lastInput;
 
 	// A world needs a hero
 	public GameWorld(Hero hero)
 	{
 		this.hero = hero;
 		currentRoom = new Room(hero);
+		lastInput = System.currentTimeMillis();
 	}
 
 	public void processUserInput()
@@ -96,37 +100,51 @@ public class GameWorld
 	}
 	
 	private void processKeysForCheating() {
-		
-		if(StdDraw.isKeyPressed(Controls.cheatMoney)) {
+		// Money - o
+		if(StdDraw.isKeyPressed(Controls.cheatMoney) && (System.currentTimeMillis() - lastInput > 50)) {
 			hero.setCoin(hero.getCoin() + 10);
+			lastInput = System.currentTimeMillis();
 		}
 		
-		if (StdDraw.isKeyPressed(Controls.cheatSpeed)) {
+		// Speed
+		if (StdDraw.isKeyPressed(Controls.cheatSpeed) && (System.currentTimeMillis() - lastInput > 200)) {
 			//so that the speedCheat is not permanent, we just have to click again on the the 'l' to make the hero back at his speed
-			if (hero.getSpeed() != HeroInfos.ISAAC_SPEED + 0.04) { 
-				hero.setSpeed(hero.getSpeed() + 0.04);
-			} else {
+			if (hero.getSpeed() != HeroInfos.ISAAC_SPEED) {
 				hero.setSpeed(HeroInfos.ISAAC_SPEED);
+			} else {
+				hero.setSpeed(hero.getSpeed() + 0.02);
 			}
+			lastInput = System.currentTimeMillis();
 		}
 		
+		// Kill mobs - k
 		if(StdDraw.isKeyPressed(Controls.cheatKill)) { //makes all monsters disappear;
 			currentRoom.removeAllMonsters();
+			lastInput = System.currentTimeMillis();
 		}
 		
-		//same system as speed
-		// TODO: A CHANGER
-		if(StdDraw.isKeyPressed(Controls.invincible)) {
-			if(hero.getHealth() != HeroInfos.HEALTH + 500) {
-				hero.setHealth(hero.getHealth() + 500);
-			} else {
-				hero.setHealth(HeroInfos.HEALTH);
+		// Invincible - i
+		if(StdDraw.isKeyPressed(Controls.invincible) && (System.currentTimeMillis() - lastInput > 200)) {
+			if(!hero.getInvincible()) {
+				hero.setInvincible(true);
+				hero.setDelay_invincible(-1); // Invincible locked
+			} 
+			else {
+				hero.setInvincible(false);
 			}
+			lastInput = System.currentTimeMillis();
 		}
 		
-		//TODO: fix tears first 
-		if(StdDraw.isKeyPressed(Controls.cheatKill)) {
-			
+		// Power - p
+		if(StdDraw.isKeyPressed(Controls.cheatDamage) && (System.currentTimeMillis() - lastInput > 200)) {
+			if(hero.getDamage() == HeroInfos.DAMAGE) {
+				hero.setDamage(100);
+			}
+			else {
+				hero.setDamage(HeroInfos.DAMAGE);
+			}
+			lastInput = System.currentTimeMillis();
+			System.out.println(hero.getDamage());
 		}
 		
 	}

@@ -93,7 +93,7 @@ public class Room
 			mob.updateGameObject();
 			mob.collision(obstacles);
 			
-			if(mob.getHealth() == 0) removeList.add(mob); // Mort mob
+			if(mob.getHealth() <= 0) removeList.add(mob); // Mort mob
 		}
 		
 		for(Monster mob: removeList) {
@@ -169,6 +169,15 @@ public class Room
 	 */
 	public void drawRoom()
 	{
+		drawTiles();
+		drawWalls();
+		drawEntities();
+		
+		StdDraw.textLeft(0, 0.9, hero.getPosition().toString()); //TODO: suppr plus tard
+		
+	}
+	
+	private void drawTiles() {
 		// For every tile, set background color.
 		StdDraw.setPenColor(StdDraw.CYAN);
 		for (int i = 0; i < RoomInfos.NB_TILES; i++)
@@ -183,7 +192,9 @@ public class Room
 						//RoomInfos.HALF_TILE_SIZE.getY());
 			}
 		}
-		
+	}
+	
+	private void drawWalls() {
 		//the corners have a brown background with a rock 
 		//lower left corner (0,0)
 		StdDraw.picture(positionFromTileIndex(0, 0).getX(), positionFromTileIndex(0, 0).getY(), ImagePaths.BROWN, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
@@ -222,8 +233,9 @@ public class Room
 		//left
 		StdDraw.picture(positionFromTileIndex(0,4).getX(), positionFromTileIndex(0,4).getY(), ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 
-		
-		
+	}
+	
+	private void drawEntities() {
 		//Draws all the mobs for the room
 		for(Monster mob : mobs) {
 			mob.drawGameObject();
@@ -245,11 +257,7 @@ public class Room
 		}
 		
 		hero.drawGameObject();
-		
-		StdDraw.textLeft(0, 0.9, hero.getPosition().toString()); //TODO: suppr plus tard
-		
 	}
-	
 	
 	
 	/**
