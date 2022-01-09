@@ -24,6 +24,12 @@ public class Fly extends Monster {
 		
 	}
 	
+	public void updateGameObject() {
+		setOld_pos(getPosition());
+		move();
+		shoot();
+	}
+	
 	public void move() {
 	
 		Vector2 new_dir = new Vector2(getHero().getPosition().getX() - getPosition().getX(), getHero().getPosition().getY() - getPosition().getY());
@@ -32,5 +38,9 @@ public class Fly extends Monster {
 		Vector2 normalizedDirection = getNormalizedDirection();
 		Vector2 positionAfterMoving = getPosition().addVector(normalizedDirection);
 		setPosition(positionAfterMoving);
+	}
+	
+	private void shoot() {
+		
 	}
 }

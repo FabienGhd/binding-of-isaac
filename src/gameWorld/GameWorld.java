@@ -1,10 +1,12 @@
 package gameWorld;
 
 import gameobjects.Hero;
+import gameobjects.Projectile;
 import libraries.StdDraw;
 import libraries.Vector2;
 import resources.Controls;
 import resources.HeroInfos;
+import resources.ImagePaths;
 import resources.RoomInfos;
 
 import java.util.Date;
@@ -144,7 +146,6 @@ public class GameWorld
 				hero.setDamage(HeroInfos.DAMAGE);
 			}
 			lastInput = System.currentTimeMillis();
-			System.out.println(hero.getDamage());
 		}
 		
 	}
@@ -152,22 +153,33 @@ public class GameWorld
 	private void processKeysForShooting() {
 		if (StdDraw.isKeyPressed(Controls.shootUp))
 		{
-			currentRoom.shoot(new Vector2(0, 1));
+			shoot(new Vector2(0, 1));
 		}
 		if (StdDraw.isKeyPressed(Controls.shootDown))
 		{
-			currentRoom.shoot(new Vector2(0, -1));
+			shoot(new Vector2(0, -1));
 		}
 		if (StdDraw.isKeyPressed(Controls.shootRight))
 		{
-			currentRoom.shoot(new Vector2(1, 0));
+			shoot(new Vector2(1, 0));
 		}
 		if (StdDraw.isKeyPressed(Controls.shootLeft))
 		{
-			currentRoom.shoot(new Vector2(-1, 0));
+			shoot(new Vector2(-1, 0));
 		}
 	}
 	
-	
+	/**
+	 * Fonction qui gere les entrees clavier pour tirer un projectile
+	 */	
+	public void shoot(Vector2 dir) {
+		if(hero.getCanShoot()) {
+			Projectile shot = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4),
+					ImagePaths.TEAR, hero.getProjectile_speed(), dir, hero.getDamage(), hero.getReach());
+			currentRoom.getProjs().add(shot);
+			hero.setCanShoot(false);
+			hero.setDelay_shoot(0);
+		}
+	}
 	
 }

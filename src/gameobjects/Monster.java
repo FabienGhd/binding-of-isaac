@@ -33,15 +33,10 @@ public abstract class Monster {
 	/**
 	 * Les 4 prochaines fonctions sont une simple copie des fonctions de 'Hero', � voir si il faut les modifier un peu
 	 */
-	public void updateGameObject()
-	{
-		old_pos = position;
-		move();
-		//shoot()?
-	}
+	abstract public void updateGameObject();
 	
 	// Chaque type de monstre a sa fa�on de se d�placer, on sp�cifiera leurs mouvements dans leur classe
-	abstract void move();
+	abstract public void move();
 	
 	//abstract void attack();
 

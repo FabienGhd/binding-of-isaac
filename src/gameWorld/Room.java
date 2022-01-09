@@ -274,18 +274,15 @@ public class Room
 	}
 
 	
-	/**
-	 * Fonction qui gere les entrees clavier pour tirer un projectile
-	 */	
-	public void shoot(Vector2 dir) {
-		if(hero.getCanShoot()) {
-			Projectile shot = new Projectile(hero.getPosition(), hero.getSize().scalarMultiplication(0.4),
-					ImagePaths.TEAR, hero.getProjectile_speed(), dir, hero.getDamage(), hero.getReach());
-			projs.add(shot);
-			hero.setCanShoot(false);
-			hero.setDelay_shoot(0);
-		}
+	
+	/*
+	 * Getters and Setters
+	 */
+	public ArrayList<Projectile> getProjs() {
+		return projs;
 	}
-	
-	
+
+	public void setProjs(ArrayList<Projectile> projs) {
+		this.projs = projs;
+	}	
 }

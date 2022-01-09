@@ -17,6 +17,11 @@ public class Gaper extends Monster {
 		setCollide(false);
 	}
 	
+	public void updateGameObject() {
+		setOld_pos(getPosition());
+		move();
+	}
+	
 	//gaper is supposed to follow Isaac
 	public void move() {
 		Vector2 new_dir = new Vector2(getHero().getPosition().getX() - getPosition().getX(), getHero().getPosition().getY() - getPosition().getY());

@@ -21,6 +21,11 @@ public class Spider extends Monster {
 		setCollide(true);
 	}
 	
+	public void updateGameObject() {
+		setOld_pos(getPosition());
+		move();
+	}
+	
 	public void move() {
 		// L'araignee court pendant x ticks, et s'arrete pendant y ticks
 		if(count == 0) {
