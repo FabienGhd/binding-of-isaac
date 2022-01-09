@@ -2,6 +2,8 @@ package gameobjects;
 
 import libraries.StdDraw;
 import libraries.Vector2;
+import resources.HeroInfos;
+import resources.ImagePaths;
 
 public class PickableObject {
 	private Vector2 position;
@@ -10,15 +12,19 @@ public class PickableObject {
 	private boolean taken;
 	private int coins;
 	private int health;
+	private int max_health;
+	private int damage;
 	
 	
-	public PickableObject(Vector2 position, Vector2 size, String imagePath, boolean taken, int coins, int health) {
-		this.position = position;
+	public PickableObject(Vector2 pos, Vector2 size, String imPath, boolean taken, int c, int h, int maxh, int d) {
+		this.position = pos;
 		this.size = size;
-		this.imagePath = imagePath;
+		this.imagePath = imPath;
 		this.taken = taken;
-		this.coins = coins;
-		this.health = health;
+		this.coins = c;
+		this.health = h;
+		this.max_health += maxh;
+		this.damage = d;
 	}
 	
 	public void drawGameObject() {
@@ -72,6 +78,22 @@ public class PickableObject {
 
 	public void setHealth(int health) {
 		this.health = health;
+	}
+
+	public int getMax_health() {
+		return max_health;
+	}
+
+	public void setMax_health(int max_health) {
+		this.max_health = max_health;
+	}
+
+	public int getDamage() {
+		return damage;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
 	}
 	
 }

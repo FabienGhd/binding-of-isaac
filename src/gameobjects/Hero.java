@@ -42,6 +42,7 @@ public class Hero
 
 		this.speed = sp;
 		this.health = h;
+		this.max_health = h;
 		this.coin = c;
 		this.damage = d;
 		this.reach = r;
@@ -122,6 +123,9 @@ public class Hero
 			//we call Physics in order to know if the hero touches the pickable objects
 			if(Physics.rectangleCollision(getPosition(), getSize(), obj.getPosition(), obj.getSize())) {
 				this.coin += obj.getCoins();
+				this.health += obj.getHealth();
+				this.max_health += obj.getMax_health();
+				this.damage += obj.getDamage();
 				obj.setTaken(true); // On supprime l'objet dans la classe Room
 			}
 		}
@@ -145,7 +149,7 @@ public class Hero
 		//HEARTS status bar 
 		if (this.health > 0) {
 		
-			for (int i = 0; i < HeroInfos.HEALTH / 2; i++) {
+			for (int i = 0; i < max_health/ 2; i++) {
 				
 				int even = (i + 1) * 2;
 				int odd = even - 1;

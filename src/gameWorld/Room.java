@@ -17,6 +17,7 @@ import libraries.StdDraw;
 import libraries.Vector2;
 import resources.DoorInfos;
 import resources.ImagePaths;
+import resources.ObjectInfos;
 import resources.RoomInfos;
 import gameobjects.StaticObject;
 import gameobjects.PickableObject;
@@ -56,8 +57,7 @@ public class Room
 		obstacles.add(new Spikes(new Vector2(0.3, 0.3), hero.getSize()));
 		
 		this.pickable = new ArrayList<PickableObject>();
-		pickable.add(new PickableObject(new Vector2(0.2, 0.8), RoomInfos.TILE_SIZE.scalarMultiplication(0.3), ImagePaths.DIME, false, 10, 0));
-		
+		addPickableObject(ObjectInfos.hp_up, new Vector2(0.6, 0.6));
 	}
 	
 	public LinkedList<Door> Door() {
@@ -151,7 +151,19 @@ public class Room
 		mobs.clear();
 	}
 	
+	
+	public void addObstacle(PickableObject obj, Vector2 pos) {
+		obj.setPosition(pos);
+		pickable.add(obj);
+	}
+	
+	public void addPickableObject(PickableObject obj, Vector2 pos) {
+		obj.setPosition(pos);
+		pickable.add(obj);
+	}
 
+	
+	
 	/*
 	 * Drawing
 	 */
@@ -213,8 +225,6 @@ public class Room
 		
 		hero.drawGameObject();
 		
-		StdDraw.picture(0.7,0.7,ImagePaths.COIN); //TEST
-		
 		//Draws all the mobs for the room
 		for(Monster mob : mobs) {
 			mob.drawGameObject();
@@ -235,7 +245,7 @@ public class Room
 			obj.drawGameObject();
 		}
 
-		StdDraw.textLeft(0, 0.9, hero.getPosition().toString());
+		StdDraw.textLeft(0, 0.9, hero.getPosition().toString()); //TODO: suppr plus tard
 		
 	}
 	
@@ -257,7 +267,6 @@ public class Room
 	
 	/**
 	 * Fonction qui gere les entrees clavier pour tirer un projectile
-	 * TODO: ajouter un delay entre les tirs
 	 */	
 	public void shoot(Vector2 dir) {
 		if(hero.getCanShoot()) {
