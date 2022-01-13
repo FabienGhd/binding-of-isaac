@@ -29,12 +29,13 @@ public class Room
 	private String groundTile; //tile for background
 	private LinkedList<Door> doors; //maybe set 'public' cuz we're gonna use it another class? 
 	
-	private ArrayList<StaticObject> obstacles;
-	private ArrayList<Monster> mobs;
-	private ArrayList<Projectile> projs;
-	private ArrayList<Projectile> enemy_proj;
-	private ArrayList<PickableObject> pickable;
-	
+	 //set to 'public' so we can use them all in other classes
+	public ArrayList<StaticObject> obstacles;
+	public ArrayList<Monster> mobs;
+	public ArrayList<Projectile> projs;
+	public ArrayList<Projectile> enemy_proj;
+	public ArrayList<PickableObject> pickable;
+
 
 	public Room(Hero hero)
 	{
@@ -45,20 +46,25 @@ public class Room
 		
 		
 		this.mobs = new ArrayList<Monster>(); //TEST
+		/*
 		mobs.add(new Spider(new Vector2(0.3, 0.5), hero));
 		mobs.add(new Gaper(RoomInfos.POSITION_TOP_OF_ROOM, hero));
 		mobs.add(new Fly(new Vector2(0.8, 0.5), hero));
-		
+		*/
 		this.projs = new ArrayList<Projectile>();
 		this.enemy_proj = new ArrayList<Projectile>();
 		
 		this.obstacles = new ArrayList<StaticObject>();
+		/*
 		obstacles.add(new Rock(new Vector2(0.8, 0.3), hero.getSize()));
 		obstacles.add(new Spikes(new Vector2(0.3, 0.3), hero.getSize()));
-		
+		*/
 		this.pickable = new ArrayList<PickableObject>();
-		addPickableObject(ObjectInfos.hp_up, new Vector2(0.6, 0.6));
+		//addPickableObject(ObjectInfos.hp_up, new Vector2(0.6, 0.6));
+		
 	}
+	
+	
 	
 	public LinkedList<Door> Door() {
 		return doors;
@@ -74,7 +80,10 @@ public class Room
 		makeMobsPlay();
 		makeProjPlay(); // On pourra changer le nom de la fonction
 		makeObjPlay();
+		
 	}
+		
+
 
 
 	private void makeHeroPlay()

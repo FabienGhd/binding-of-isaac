@@ -24,7 +24,7 @@ public class GameWorld
 	public GameWorld(Hero hero)
 	{
 		this.hero = hero;
-		currentRoom = new Room(hero);
+		currentRoom = new MonsterRoom(hero);
 		lastInput = System.currentTimeMillis();
 	}
 
