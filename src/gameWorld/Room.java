@@ -3,6 +3,7 @@ package gameWorld;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import gameobjects.Fly;
 import gameobjects.Gaper;
@@ -35,6 +36,12 @@ public class Room
 	public ArrayList<Projectile> projs;
 	public ArrayList<Projectile> enemy_proj;
 	public ArrayList<PickableObject> pickable;
+	
+	public boolean accessOtherRooms;
+	public Room topRoom;
+	public Room bottomRoom;
+	public Room rightRoom;
+	public Room leftRoom;
 
 
 	public Room(Hero hero)
@@ -46,30 +53,13 @@ public class Room
 		
 		
 		this.mobs = new ArrayList<Monster>(); //TEST
-		/*
-		mobs.add(new Spider(new Vector2(0.3, 0.5), hero));
-		mobs.add(new Gaper(RoomInfos.POSITION_TOP_OF_ROOM, hero));
-		mobs.add(new Fly(new Vector2(0.8, 0.5), hero));
-		*/
 		this.projs = new ArrayList<Projectile>();
 		this.enemy_proj = new ArrayList<Projectile>();
-		
 		this.obstacles = new ArrayList<StaticObject>();
-		/*
-		obstacles.add(new Rock(new Vector2(0.8, 0.3), hero.getSize()));
-		obstacles.add(new Spikes(new Vector2(0.3, 0.3), hero.getSize()));
-		*/
 		this.pickable = new ArrayList<PickableObject>();
 		//addPickableObject(ObjectInfos.hp_up, new Vector2(0.6, 0.6));
-		
 	}
 	
-	
-	
-	public LinkedList<Door> Door() {
-		return doors;
-	}
-
 
 	/*
 	 * Make every entity that compose a room process one step
@@ -81,10 +71,41 @@ public class Room
 		makeProjPlay(); // On pourra changer le nom de la fonction
 		makeObjPlay();
 		
+		roomDone();
+		accessRooms();
+		
 	}
 		
 
-
+	private void roomDone() {
+		if(mobs.isEmpty()) accessOtherRooms = true;
+	}
+	
+	//we can only access other rooms if we have killed all the mobs of the room
+	private void accessRooms() {
+		if(accessOtherRooms) {
+			if(Physics.rectangleCollision(DoorInfos.TOP_DOOR_ACCESS, RoomInfos.TILE_SIZE.scalarMultiplication(1.5), 
+					hero.getPosition(), hero.getSize())) {
+				
+				hero.getPosition().setY(0.15); //hero on bottom if enter in top room
+				
+			} else if(Physics.rectangleCollision(DoorInfos.BOTTOM_DOOR_ACCESS, RoomInfos.TILE_SIZE.scalarMultiplication(1.5), 
+					hero.getPosition(), hero.getSize())) {
+						
+				hero.getPosition().setY(0.87);
+				
+			} else if(Physics.rectangleCollision(DoorInfos.LEFT_DOOR_ACCESS, RoomInfos.TILE_SIZE.scalarMultiplication(1.5), 
+					hero.getPosition(), hero.getSize())) {
+				
+				hero.getPosition().setX(0.87);
+						
+			} else if(Physics.rectangleCollision(DoorInfos.RIGHT_DOOR_ACCESS, RoomInfos.TILE_SIZE.scalarMultiplication(1.5), 
+					hero.getPosition(), hero.getSize())) {
+				
+				hero.getPosition().setX(0.13);
+			}
+		}
+	}
 
 	private void makeHeroPlay()
 	{
@@ -232,7 +253,23 @@ public class Room
 			StdDraw.picture(positionFromTileIndex(i, RoomInfos.NB_TILES-1).getX(),positionFromTileIndex(i, RoomInfos.NB_TILES-1).getY(), ImagePaths.WALL_TOP, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 		}
 		
-		//test - draws the 4 doors
+		
+		//TODO: automation of doors (closed, open) 
+		if(!accessOtherRooms) {
+			StdDraw.picture(positionFromTileIndex(4, RoomInfos.NB_TILES - 1).getX(), 
+							positionFromTileIndex(4, RoomInfos.NB_TILES - 1).getY(), 
+							ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+
+			} else {
+				StdDraw.picture(positionFromTileIndex(4, RoomInfos.NB_TILES - 1).getX(), 
+						positionFromTileIndex(4, RoomInfos.NB_TILES - 1).getY(), 
+						ImagePaths.OPENED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+			}
+		
+		
+		
+		
+		//test
 		//right
 		StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, 4).getX(), positionFromTileIndex(RoomInfos.NB_TILES - 1, 4).getY(), ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 		//up
@@ -241,7 +278,7 @@ public class Room
 		StdDraw.picture(positionFromTileIndex(4,0).getX(), positionFromTileIndex(4,0).getY(), ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 		//left
 		StdDraw.picture(positionFromTileIndex(0,4).getX(), positionFromTileIndex(0,4).getY(), ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-
+		
 	}
 	
 	private void drawEntities() {
@@ -267,6 +304,7 @@ public class Room
 		
 		hero.drawGameObject();
 	}
+	
 	
 	
 	/**

@@ -1,6 +1,10 @@
 package gameloop;
 
+import gameWorld.BossRoom;
 import gameWorld.GameWorld;
+import gameWorld.MonsterRoom;
+import gameWorld.Room;
+import gameWorld.ShopRoom;
 import gameobjects.Hero;
 import libraries.Keybinding;
 import libraries.StdDraw;
@@ -25,6 +29,8 @@ public class Main
 		// Hero, world and display initialisation.
 		Hero isaac = new Hero(RoomInfos.POSITION_CENTER_OF_ROOM, HeroInfos.ISAAC_SIZE, HeroInfos.ISAAC_SPEED, 
 				ImagePaths.ISAAC, HeroInfos.HEALTH, HeroInfos.COINS, HeroInfos.DAMAGE, HeroInfos.REACH, HeroInfos.PROJECTILE_SPEED);
+		
+		
 		GameWorld world = new GameWorld(isaac);				
 		initializeDisplay();
 		manageSound();		

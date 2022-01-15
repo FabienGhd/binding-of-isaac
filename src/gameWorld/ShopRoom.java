@@ -11,10 +11,11 @@ public class ShopRoom extends Room {
 		super(hero);
 		
 		addPickableObject(ObjectInfos.hp_up, new Vector2(0.6, 0.6));
+		addPickableObject(ObjectInfos.blood_of, new Vector2(0.4, 0.5));
 	}
 	
 	public void drawItems() {
 		super.drawRoom();
-		StdDraw.picture(0.4, 0.5, ImagePaths.COIN);
+		
 	}
 }
