@@ -9,6 +9,7 @@ public class ShopRoom extends Room {
 
 	public ShopRoom(Hero hero) {
 		super(hero);
+		setAccessOtherRooms(true);
 	}
 	
 	public void generate() {

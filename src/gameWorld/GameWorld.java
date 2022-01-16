@@ -2,9 +2,11 @@ package gameWorld;
 
 import gameobjects.Hero;
 import gameobjects.Projectile;
+import libraries.Physics;
 import libraries.StdDraw;
 import libraries.Vector2;
 import resources.Controls;
+import resources.DoorInfos;
 import resources.HeroInfos;
 import resources.ImagePaths;
 import resources.RoomInfos;
@@ -27,7 +29,7 @@ public class GameWorld
 		this.hero = hero;
 		lastInput = System.currentTimeMillis();
 		dungeon = new Dungeon(hero);
-		currentRoom = new Spawn(hero);
+		currentRoom = dungeon.getCurrentRoom();
 	}
 
 	public void processUserInput()
@@ -37,16 +39,12 @@ public class GameWorld
 		processKeysForCheating();
 	}
 
-	//TODO
+	
 	public boolean gameOver()
 	{
-		/*
 		if(hero.getHealth() == 0) {
-			StdDraw.picture(0.7, 0.7, ImagePaths.GAMEOVER_SCREEN); //test
-			System.out.println("game over man");
 			return true;
 		}
-		*/
 		return false;
 		
 	}
@@ -54,6 +52,7 @@ public class GameWorld
 	public void updateGameObjects()
 	{
 		currentRoom.updateRoom();
+		accessRooms2();
 	}
 
 	public void drawGameObjects()
@@ -164,6 +163,21 @@ public class GameWorld
 			currentRoom.getProjs().add(shot);
 			hero.setCanShoot(false);
 			hero.setDelay_shoot(0);
+		}
+	}
+	
+	
+	private void accessRooms2() {
+		if(currentRoom.isAccessOtherRooms()) {
+			for(Door door : currentRoom.getDoors()) {
+				if(Physics.rectangleCollision(door.getAccess_position(), RoomInfos.TILE_SIZE.scalarMultiplication(1.5), hero.getPosition(), hero.getSize()) && (System.currentTimeMillis() - lastInput > 100)) {
+					currentRoom = door.getNextRoom();
+					hero.getPosition().setX(1 - hero.getPosition().getX());
+					hero.getPosition().setY(1 - hero.getPosition().getY()); // Complément à 1 de la position	
+					
+					lastInput = System.currentTimeMillis();			
+				}
+			}
 		}
 	}
 

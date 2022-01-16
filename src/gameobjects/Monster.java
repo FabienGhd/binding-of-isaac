@@ -20,6 +20,8 @@ public abstract class Monster {
 	private int health;
 	
 	private boolean collide;
+	private boolean shoot;
+	
 	private Hero hero;
 
 
@@ -28,6 +30,7 @@ public abstract class Monster {
 		this.position = position;
 		this.direction = new Vector2();
 		this.hero = hero;
+		this.shoot = true;
 	}
 	
 	/**
@@ -165,6 +168,29 @@ public abstract class Monster {
 	public void setHero(Hero hero) {
 		this.hero = hero;
 	}
+	
+	
+	
+	
+	
+
+	public boolean isShoot() {
+		return shoot;
+	}
+
+	public void setShoot(boolean shoot) {
+		this.shoot = shoot;
+	}
+
+	public abstract Projectile shoot();
+
+	public void setLastShoot(long s) {
+		
+		
+	}
+	
+	public long getLastShoot() {
+		return 0;}
 	
 	
 }

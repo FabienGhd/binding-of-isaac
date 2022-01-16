@@ -4,15 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gameobjects.Hero;
+import resources.DoorInfos;
 
 public class Dungeon {
 	
 	private Hero hero;
-	public Room[][] dung;
+	private Room[][] dung;
+	private Room currentRoom;
 	
 	public Dungeon(Hero h) {
 		hero = h;
+		dung = new Room[4][3];
 		generate();
+		currentRoom = dung[2][1];
 	}
 	
 	public void generate() {
@@ -39,27 +43,52 @@ public class Dungeon {
 		// De gauche a droite, de haut en bas :
 		
 		dung[2][0] = shop; // Shop
-		dung[2][0].setRightRoom(spawn);
-		shop_doors.add(null) //TODO
+		shop.getDoors().add(new Door("RIGHT", spawn));
 		
 		dung[0][1] = boss; // Boss
-		dung[0][1].setBottomRoom(mr1);
+		boss.getDoors().add(new Door("DOWN", mr1));
 		
 		dung[1][1] = mr1; // MR1
-		dung[1][1].setTopRoom(boss);
-		dung[1][1].setBottomRoom(spawn);
+		mr1.getDoors().add(new Door("DOWN", spawn));
+		mr1.getDoors().add(new Door("UP", boss));
 		
 		dung[2][1] = spawn; // Spawn
-		dung[1][1].setTopRoom(mr1);
-		dung[1][1].setBottomRoom(mr2);
-		dung[2][0].setRightRoom(mr3);
-		dung[2][0].setLeftRoom(shop);
+		spawn.getDoors().add(new Door("UP", mr1));
+		spawn.getDoors().add(new Door("RIGHT", mr3));
+		spawn.getDoors().add(new Door("DOWN", mr2));
+		spawn.getDoors().add(new Door("LEFT", shop));
 		
 		dung[3][1] = mr2; // MR2
-		dung[1][1].setTopRoom(spawn);
+		mr2.getDoors().add(new Door("UP", spawn));
 		
-		dung[2][2] = mr3; // MR3
-		dung[2][0].setLeftRoom(spawn);
+		dung[2][2] = mr3; // MR3d
+		mr3.getDoors().add(new Door("LEFT", spawn));
 	}
+
+	public Hero getHero() {
+		return hero;
+	}
+
+	public void setHero(Hero hero) {
+		this.hero = hero;
+	}
+
+	public Room[][] getDung() {
+		return dung;
+	}
+
+	public void setDung(Room[][] dung) {
+		this.dung = dung;
+	}
+
+	public Room getCurrentRoom() {
+		return currentRoom;
+	}
+
+	public void setCurrentRoom(Room currentRoom) {
+		this.currentRoom = currentRoom;
+	}
+	
+	
 	
 }

@@ -31,6 +31,8 @@ public class Gaper extends Monster {
 		Vector2 positionAfterMoving = getPosition().addVector(normalizedDirection);
 		setPosition(positionAfterMoving);
 	}
-
+	
+	public Projectile shoot() {
+		return null;}
 		
 }

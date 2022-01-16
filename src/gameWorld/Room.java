@@ -48,8 +48,7 @@ public abstract class Room
 	{
 		this.setHero(hero);
 		this.groundTile = ImagePaths.DEFAULT_TILE;
-		this.doors = new ArrayList<Door>(); //we choose LinkedList because 
-											//there will be a really dynamic system (lots of deletion and addition) for each room entered
+		this.doors = new ArrayList<Door>(); // 0 : HAUT; 1 : DROITE; 2 : BAS; 3 : GAUCHE
 		
 		
 		this.mobs = new ArrayList<Monster>(); //TEST
@@ -73,46 +72,26 @@ public abstract class Room
 		makeObjPlay();
 		
 		roomDone();
-		accessRooms();
 		
 	}
 		
 
 	private void roomDone() {
-		if(mobs.isEmpty()) accessOtherRooms = true;
-	}
-	
-	//we can only access other rooms if we have killed all the mobs of the room
-	private void accessRooms() {
-		if(accessOtherRooms) {
-			if(Physics.rectangleCollision(DoorInfos.TOP_DOOR_ACCESS, RoomInfos.TILE_SIZE.scalarMultiplication(1.5), 
-					getHero().getPosition(), getHero().getSize())) {
-				
-				getHero().getPosition().setY(0.15); //hero on bottom if enter in top room
-				
-			} else if(Physics.rectangleCollision(DoorInfos.BOTTOM_DOOR_ACCESS, RoomInfos.TILE_SIZE.scalarMultiplication(1.5), 
-					getHero().getPosition(), getHero().getSize())) {
-						
-				getHero().getPosition().setY(0.87);
-				
-			} else if(Physics.rectangleCollision(DoorInfos.LEFT_DOOR_ACCESS, RoomInfos.TILE_SIZE.scalarMultiplication(1.5), 
-					getHero().getPosition(), getHero().getSize())) {
-				
-				getHero().getPosition().setX(0.87);
-						
-			} else if(Physics.rectangleCollision(DoorInfos.RIGHT_DOOR_ACCESS, RoomInfos.TILE_SIZE.scalarMultiplication(1.5), 
-					getHero().getPosition(), getHero().getSize())) {
-				
-				getHero().getPosition().setX(0.13);
+		if(mobs.isEmpty()) {
+			accessOtherRooms = true;
+			for(Door door : doors) {
+				door.setOpened(true);
 			}
 		}
 	}
+	
 
 	private void makeHeroPlay()
 	{
 		getHero().updateGameObject();
 		getHero().collision(obstacles, mobs, enemy_proj, pickable);
 	}
+	
 	
 	/*
 	 * Parcours la liste des mobs presents dans la piece, les fait avancer d'un tick
@@ -124,6 +103,11 @@ public abstract class Room
 			mob.updateGameObject();
 			mob.collision(obstacles);
 			
+			if(mob.isShoot() && (System.currentTimeMillis() - mob.getLastShoot() > 700)) {
+				enemy_proj.add(mob.shoot());
+				mob.setLastShoot(System.currentTimeMillis());
+			}
+			
 			if(mob.getHealth() <= 0) removeList.add(mob); // Mort mob
 		}
 		
@@ -131,6 +115,7 @@ public abstract class Room
 			mobs.remove(mob);
 		}
 	}
+	
 	
 	private void makeProjPlay() {
 		List<Projectile> removeList = new ArrayList<Projectile>();
@@ -159,11 +144,36 @@ public abstract class Room
 			}
 		}
 		
+		// Enemy proj
+		for(Projectile proj: enemy_proj) {
+			proj.updateGameObject();
+			
+			
+			// Gestion reach
+			if(proj.getCount() >= proj.getReach()) {
+				removeList.add(proj);
+			}
+			
+			// Si hors zone de jeu : kill
+			else if(!Physics.rectangleCollision(proj.getPosition(), proj.getSize(), RoomInfos.POSITION_CENTER_OF_ROOM, RoomInfos.TILE_SIZE.scalarMultiplication(7))) {
+				removeList.add(proj);
+			}
+			
+			// Collision avec monstres
+			else {
+				if(Physics.rectangleCollision(proj.getPosition(), proj.getSize(), hero.getPosition(), hero.getSize())) {
+					hero.attacked(proj.getDamage());
+					removeList.add(proj);
+				}
+			}
+		}
+		
 		// Pour eviter l'erreur 'ConcurrentModification'
 		for(Projectile proj: removeList) {
 			projs.remove(proj);
 		}
 	}
+	
 	
 	public void makeObjPlay() {
 		List<PickableObject> removeList = new ArrayList<PickableObject>();
@@ -176,6 +186,7 @@ public abstract class Room
 			pickable.remove(obj);
 		}
 	}
+	
 	
 	//used for cheating
 	public void removeAllMonsters() {
@@ -205,6 +216,7 @@ public abstract class Room
 	{
 		drawTiles();
 		drawWalls();
+		drawDoors();
 		drawEntities();
 		
 		StdDraw.textLeft(0, 0.9, getHero().getPosition().toString()); //TODO: suppr plus tard
@@ -255,52 +267,6 @@ public abstract class Room
 			StdDraw.picture(positionFromTileIndex(i, RoomInfos.NB_TILES-1).getX(),positionFromTileIndex(i, RoomInfos.NB_TILES-1).getY(), ImagePaths.WALL_TOP, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 		}
 		
-		
-		//TODO: automation of doors (closed, open) 
-		
-		//TOP DOOR
-		if(!accessOtherRooms) {
-			StdDraw.picture(DoorInfos.TOP_DOOR_ACCESS.getX(), DoorInfos.TOP_DOOR_ACCESS.getY(), 
-							ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-
-			} else {
-				StdDraw.picture(positionFromTileIndex(4, RoomInfos.NB_TILES - 1).getX(), 
-						positionFromTileIndex(4, RoomInfos.NB_TILES - 1).getY(), 
-						ImagePaths.OPENED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-			}
-		//BOTTOM DOOR
-		if(!accessOtherRooms) {
-			StdDraw.picture(positionFromTileIndex(4, 0).getX(), 
-							positionFromTileIndex(4, 0).getY(), 
-							ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-
-			} else {
-				StdDraw.picture(positionFromTileIndex(4, 0).getX(), 
-						positionFromTileIndex(4, 0).getY(), 
-						ImagePaths.OPENED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-			}
-		//LEFT DOOR
-		if(!accessOtherRooms) {
-			StdDraw.picture(positionFromTileIndex(0, 4).getX(), 
-							positionFromTileIndex(0, 4).getY(), 
-							ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-
-			} else {
-				StdDraw.picture(positionFromTileIndex(0, 4).getX(), 
-						positionFromTileIndex(0, 4).getY(), 
-						ImagePaths.OPENED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-			}
-		//RIGHT DOOR
-		if(!accessOtherRooms) {
-			StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, 4).getX(), 
-							positionFromTileIndex(RoomInfos.NB_TILES - 1, 4).getY(), 
-							ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-
-			} else {
-				StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, 4).getX(), 
-						positionFromTileIndex(RoomInfos.NB_TILES - 1, 4).getY(), 
-						ImagePaths.OPENED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-			}
 	}
 	
 	private void drawEntities() {
@@ -311,6 +277,10 @@ public abstract class Room
 		
 		//Draws all the projectiles
 		for(Projectile tear : projs) {
+			tear.drawGameObject();
+		}
+		
+		for(Projectile tear : enemy_proj) {
 			tear.drawGameObject();
 		}
 		
@@ -326,6 +296,14 @@ public abstract class Room
 		
 		getHero().drawGameObject();
 	}
+	
+	private void drawDoors() {		
+		for(Door door: doors) {
+			door.draw();
+		}
+	}
+	
+	
 	
 	
 	/**

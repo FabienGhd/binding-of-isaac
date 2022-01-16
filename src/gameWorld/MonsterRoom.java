@@ -11,7 +11,8 @@ import java.util.Random;
 public class MonsterRoom extends Room {
 
 	public MonsterRoom(Hero hero) {
-		super(hero);		
+		super(hero);	
+		setAccessOtherRooms(false);	
 	}
 	
 	

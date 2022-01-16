@@ -11,6 +11,6 @@ public class FlyInfos {
 
 	public static final int PROJECTILE_DAMAGE = 1;
 	public static final double PROJECTILE_SPEED = 1;
-	public static final int REACH = 1;
+	public static final int REACH = 30;
 
 }

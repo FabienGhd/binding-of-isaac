@@ -19,6 +19,7 @@ public class Spider extends Monster {
 		setDamage(SpiderInfos.SPIDER_DAMAGE);
 		setHealth(SpiderInfos.SPIDER_HEALTH);
 		setCollide(true);
+		setShoot(false);
 	}
 	
 	public void updateGameObject() {
@@ -44,4 +45,7 @@ public class Spider extends Monster {
 		Vector2 positionAfterMoving = getPosition().addVector(normalizedDirection);
 		setPosition(positionAfterMoving);
 	}
+	
+	public Projectile shoot() {
+		return null;}
 }

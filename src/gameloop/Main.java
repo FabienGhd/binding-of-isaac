@@ -44,6 +44,13 @@ public class Main
 			//backgroundClip.start();
 			
 		}
+		while(true) {
+			Timer.beginTimer();
+			StdDraw.clear();
+			StdDraw.picture(0.7, 0.7, ImagePaths.GAMEOVER_SCREEN);
+			StdDraw.show();
+			Timer.waitToMaintainConstantFPS();
+		}
 	}
 
 	private static void processNextStep(GameWorld world)

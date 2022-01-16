@@ -9,6 +9,7 @@ public class Spawn extends Room {
 
 	public Spawn(Hero hero) {
 		super(hero);
+		setAccessOtherRooms(true);
 		
 		//no monsters and obstacles in the spawn room
 		

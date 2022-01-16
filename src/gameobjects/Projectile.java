@@ -32,7 +32,6 @@ public class Projectile {
 	{
 		move();
 		count ++;
-		//TODO: si balle touche/sort de l'écran/atteint son reach : on la supprime
 	}
 
 	private void move()
