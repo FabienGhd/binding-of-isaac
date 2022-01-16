@@ -14,6 +14,8 @@ public class Spawn extends Room {
 		
 	}
 	
+	public void generate() {}
+	
 	public void draw() {
 		super.drawRoom();
 		

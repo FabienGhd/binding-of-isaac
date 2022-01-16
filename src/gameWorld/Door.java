@@ -7,6 +7,7 @@ public class Door {
 	private Vector2 position; //Changer en int? 0: Haut ; 1: Droite ; 2 : Bas ; ..
 	private Vector2 size;
 	private String imagePath;
+	private boolean opened;
 	
 	public Door(Vector2 position, Vector2 size, String imagePath, Room nextRoom) {
 		this.position = position;

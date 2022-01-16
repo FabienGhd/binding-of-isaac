@@ -24,31 +24,31 @@ import gameobjects.StaticObject;
 import gameobjects.PickableObject;
 
 
-public class Room
+public abstract class Room
 {
 	private Hero hero;
 	private String groundTile; //tile for background
-	private LinkedList<Door> doors; //maybe set 'public' cuz we're gonna use it another class? 
 	
 	 //set to 'public' so we can use them all in other classes
-	public ArrayList<StaticObject> obstacles;
-	public ArrayList<Monster> mobs;
-	public ArrayList<Projectile> projs;
-	public ArrayList<Projectile> enemy_proj;
-	public ArrayList<PickableObject> pickable;
+	private ArrayList<StaticObject> obstacles;
+	private ArrayList<Monster> mobs;
+	private ArrayList<Projectile> projs;
+	private ArrayList<Projectile> enemy_proj;
+	private ArrayList<PickableObject> pickable;
+	private ArrayList<Door> doors;
 	
-	public boolean accessOtherRooms;
-	public Room topRoom;
-	public Room bottomRoom;
-	public Room rightRoom;
-	public Room leftRoom;
+	private boolean accessOtherRooms;
+	private Room topRoom;
+	private Room bottomRoom;
+	private Room rightRoom;
+	private Room leftRoom;
 
 
 	public Room(Hero hero)
 	{
-		this.hero = hero;
+		this.setHero(hero);
 		this.groundTile = ImagePaths.DEFAULT_TILE;
-		this.doors = new LinkedList<Door>(); //we choose LinkedList because 
+		this.doors = new ArrayList<Door>(); //we choose LinkedList because 
 											//there will be a really dynamic system (lots of deletion and addition) for each room entered
 		
 		
@@ -57,6 +57,8 @@ public class Room
 		this.enemy_proj = new ArrayList<Projectile>();
 		this.obstacles = new ArrayList<StaticObject>();
 		this.pickable = new ArrayList<PickableObject>();
+		
+		generate();
 	}
 	
 
@@ -84,32 +86,32 @@ public class Room
 	private void accessRooms() {
 		if(accessOtherRooms) {
 			if(Physics.rectangleCollision(DoorInfos.TOP_DOOR_ACCESS, RoomInfos.TILE_SIZE.scalarMultiplication(1.5), 
-					hero.getPosition(), hero.getSize())) {
+					getHero().getPosition(), getHero().getSize())) {
 				
-				hero.getPosition().setY(0.15); //hero on bottom if enter in top room
+				getHero().getPosition().setY(0.15); //hero on bottom if enter in top room
 				
 			} else if(Physics.rectangleCollision(DoorInfos.BOTTOM_DOOR_ACCESS, RoomInfos.TILE_SIZE.scalarMultiplication(1.5), 
-					hero.getPosition(), hero.getSize())) {
+					getHero().getPosition(), getHero().getSize())) {
 						
-				hero.getPosition().setY(0.87);
+				getHero().getPosition().setY(0.87);
 				
 			} else if(Physics.rectangleCollision(DoorInfos.LEFT_DOOR_ACCESS, RoomInfos.TILE_SIZE.scalarMultiplication(1.5), 
-					hero.getPosition(), hero.getSize())) {
+					getHero().getPosition(), getHero().getSize())) {
 				
-				hero.getPosition().setX(0.87);
+				getHero().getPosition().setX(0.87);
 						
 			} else if(Physics.rectangleCollision(DoorInfos.RIGHT_DOOR_ACCESS, RoomInfos.TILE_SIZE.scalarMultiplication(1.5), 
-					hero.getPosition(), hero.getSize())) {
+					getHero().getPosition(), getHero().getSize())) {
 				
-				hero.getPosition().setX(0.13);
+				getHero().getPosition().setX(0.13);
 			}
 		}
 	}
 
 	private void makeHeroPlay()
 	{
-		hero.updateGameObject();
-		hero.collision(obstacles, mobs, enemy_proj, pickable);
+		getHero().updateGameObject();
+		getHero().collision(obstacles, mobs, enemy_proj, pickable);
 	}
 	
 	/*
@@ -190,7 +192,10 @@ public class Room
 		obj.setPosition(pos);
 		pickable.add(obj);
 	}
-
+	
+	
+	
+	public abstract void generate();
 	
 	
 	/*
@@ -202,7 +207,7 @@ public class Room
 		drawWalls();
 		drawEntities();
 		
-		StdDraw.textLeft(0, 0.9, hero.getPosition().toString()); //TODO: suppr plus tard
+		StdDraw.textLeft(0, 0.9, getHero().getPosition().toString()); //TODO: suppr plus tard
 		
 	}
 	
@@ -255,8 +260,7 @@ public class Room
 		
 		//TOP DOOR
 		if(!accessOtherRooms) {
-			StdDraw.picture(positionFromTileIndex(4, RoomInfos.NB_TILES - 1).getX(), 
-							positionFromTileIndex(4, RoomInfos.NB_TILES - 1).getY(), 
+			StdDraw.picture(DoorInfos.TOP_DOOR_ACCESS.getX(), DoorInfos.TOP_DOOR_ACCESS.getY(), 
 							ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 
 			} else {
@@ -320,7 +324,7 @@ public class Room
 			obj.drawGameObject();
 		}
 		
-		hero.drawGameObject();
+		getHero().drawGameObject();
 	}
 	
 	
@@ -348,5 +352,127 @@ public class Room
 
 	public void setProjs(ArrayList<Projectile> projs) {
 		this.projs = projs;
-	}	
+	}
+
+
+	public Hero getHero() {
+		return hero;
+	}
+
+
+	public void setHero(Hero hero) {
+		this.hero = hero;
+	}
+
+
+	public String getGroundTile() {
+		return groundTile;
+	}
+
+
+	public void setGroundTile(String groundTile) {
+		this.groundTile = groundTile;
+	}
+
+
+	public ArrayList<Door> getDoors() {
+		return doors;
+	}
+
+
+	public void setDoors(ArrayList<Door> doors) {
+		this.doors = doors;
+	}
+
+
+	public ArrayList<StaticObject> getObstacles() {
+		return obstacles;
+	}
+
+
+	public void setObstacles(ArrayList<StaticObject> obstacles) {
+		this.obstacles = obstacles;
+	}
+
+
+	public ArrayList<Monster> getMobs() {
+		return mobs;
+	}
+
+
+	public void setMobs(ArrayList<Monster> mobs) {
+		this.mobs = mobs;
+	}
+
+
+	public ArrayList<Projectile> getEnemy_proj() {
+		return enemy_proj;
+	}
+
+
+	public void setEnemy_proj(ArrayList<Projectile> enemy_proj) {
+		this.enemy_proj = enemy_proj;
+	}
+
+
+	public ArrayList<PickableObject> getPickable() {
+		return pickable;
+	}
+
+
+	public void setPickable(ArrayList<PickableObject> pickable) {
+		this.pickable = pickable;
+	}
+
+
+	public boolean isAccessOtherRooms() {
+		return accessOtherRooms;
+	}
+
+
+	public void setAccessOtherRooms(boolean accessOtherRooms) {
+		this.accessOtherRooms = accessOtherRooms;
+	}
+
+
+	public Room getTopRoom() {
+		return topRoom;
+	}
+
+
+	public void setTopRoom(Room topRoom) {
+		this.topRoom = topRoom;
+	}
+
+
+	public Room getBottomRoom() {
+		return bottomRoom;
+	}
+
+
+	public void setBottomRoom(Room bottomRoom) {
+		this.bottomRoom = bottomRoom;
+	}
+
+
+	public Room getRightRoom() {
+		return rightRoom;
+	}
+
+
+	public void setRightRoom(Room rightRoom) {
+		this.rightRoom = rightRoom;
+	}
+
+
+	public Room getLeftRoom() {
+		return leftRoom;
+	}
+
+
+	public void setLeftRoom(Room leftRoom) {
+		this.leftRoom = leftRoom;
+	}
+	
+	
 }

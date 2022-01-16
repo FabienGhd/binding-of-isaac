@@ -5,60 +5,89 @@ import libraries.StdDraw;
 import libraries.Vector2;
 import resources.ObjectInfos;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MonsterRoom extends Room {
 
 	public MonsterRoom(Hero hero) {
-		super(hero);
+		super(hero);		
+	}
 	
-		Random random = new Random(); 
+	
+	public void generate() {
 		
-		//TODO:review coordinates, collision monster and obstacle. 
+		
+		ArrayList<Integer> positionsX = new ArrayList<>();
+		ArrayList<Integer> positionsY = new ArrayList<>();
+		
+		for(int i = 2; i < 7; i++) {
+			positionsX.add(i);
+			positionsY.add(i);
+		}
+		
+		Random random = new Random(); 
 		
 		//random generation of monsters
 		for(int i = 0; i < 3; i++) {
 			
+			int randomIndexX = random.nextInt(positionsX.size());
+			int randomIndexY = random.nextInt(positionsY.size());
+			
 			int mobNbr = random.nextInt(2); //generates a random integer between 0 and 1
-			double coordinatesX = random.nextDouble(0.5)+0.3; ////generates a random double between 0.2 and 0.7 
-			double coordinatesY = random.nextDouble(0.5)+0.3;
+			
+			int coordinatesX = positionsX.get(randomIndexX); 
+			int coordinatesY = positionsY.get(randomIndexY);
+			
+			positionsX.remove(randomIndexX);
+			positionsY.remove(randomIndexY);
+			
+			Vector2 pos = Room.positionFromTileIndex(coordinatesX, coordinatesY);
 
 			if(mobNbr == 0) {
-				mobs.add(new Fly(new Vector2(coordinatesX, coordinatesY), hero));
+				getMobs().add(new Fly(pos, getHero()));
 			} 	
 			else {
-				mobs.add(new Spider(new Vector2(coordinatesX, coordinatesY), hero));
+				getMobs().add(new Spider(pos, getHero()));
 			}
 		}
 		
 		//random generation of obstacles	
 		for(int i = 0; i < 2; i++) {
 		
-		int mobNbr = random.nextInt(2); 
-		
-		double coordinatesX = random.nextDouble(0.5)+0.3; 
-		double coordinatesY = random.nextDouble(0.5)+0.3;
-
-		if(mobNbr == 0) {
-			obstacles.add(new Spikes(new Vector2(coordinatesX, coordinatesY), hero.getSize()));
-		} 	
-		else {
-			obstacles.add(new Rock(new Vector2(coordinatesX, coordinatesY), hero.getSize()));
+			int mobNbr = random.nextInt(2); 
+			
+			int randomIndexX = random.nextInt(positionsX.size());
+			int randomIndexY = random.nextInt(positionsY.size());
+			
+			int coordinatesX = positionsX.get(randomIndexX); 
+			int coordinatesY = positionsY.get(randomIndexY);
+			
+			positionsX.remove(randomIndexX);
+			positionsY.remove(randomIndexY);
+			
+			Vector2 pos = Room.positionFromTileIndex(coordinatesX, coordinatesY);
+	
+			if(mobNbr == 0) {
+				getObstacles().add(new Spikes(pos, getHero().getSize()));
+			} 	
+			else {
+				getObstacles().add(new Rock(pos, getHero().getSize()));
+				}
 		}
 	}
-		
-	if(accessOtherRooms) {
-		addPickableObject(ObjectInfos.DIME, new Vector2(0.6, 0.6));
-		addPickableObject(ObjectInfos.NICKEL, new Vector2(0.3, 0.7));
-		addPickableObject(ObjectInfos.PENNY, new Vector2(0.7, 0.3));
+	
+	public void updateRoom() {
+		super.updateRoom();
+		if(isAccessOtherRooms()) {
+			generateStuff();
+		}
 	}
-		
-		
+	
+	private void generateStuff() {
+		//TODO
 	}
 	
 	public void draw() {
-		super.drawRoom();
-		
-		
 	}
 }
