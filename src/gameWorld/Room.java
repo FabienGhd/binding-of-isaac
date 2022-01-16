@@ -102,7 +102,7 @@ public abstract class Room
 		for(Monster mob : mobs) {
 			mob.updateGameObject();
 			mob.collision(obstacles);
-			
+
 			if(mob.isShoot() && (System.currentTimeMillis() - mob.getLastShoot() > 700)) {
 				enemy_proj.add(mob.shoot());
 				mob.setLastShoot(System.currentTimeMillis());

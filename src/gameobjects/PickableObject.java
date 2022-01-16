@@ -14,9 +14,10 @@ public class PickableObject {
 	private int health;
 	private int max_health;
 	private int damage;
+	private int price;
 	
 	
-	public PickableObject(Vector2 pos, Vector2 size, String imPath, boolean taken, int c, int h, int maxh, int d) {
+	public PickableObject(Vector2 pos, Vector2 size, String imPath, boolean taken, int c, int h, int maxh, int d, int p) {
 		this.position = pos;
 		this.size = size;
 		this.imagePath = imPath;
@@ -25,6 +26,7 @@ public class PickableObject {
 		this.health = h;
 		this.max_health += maxh;
 		this.damage = d;
+		this.price = p;
 	}
 	
 	public void drawGameObject() {
@@ -95,5 +97,14 @@ public class PickableObject {
 	public void setDamage(int damage) {
 		this.damage = damage;
 	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	
 	
 }

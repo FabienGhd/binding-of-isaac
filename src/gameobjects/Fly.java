@@ -25,6 +25,7 @@ public class Fly extends Monster {
 		projectile_speed = HeroInfos.ISAAC_SPEED*1.5;
 		reach = FlyInfos.REACH;
 		setLastShoot(System.currentTimeMillis());
+		setShoot(true);
 		
 	}
 	

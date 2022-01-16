@@ -114,11 +114,12 @@ public class Hero
 		for(PickableObject obj : pickable) {
 			
 			//we call Physics in order to know if the hero touches the pickable objects
-			if(Physics.rectangleCollision(getPosition(), getSize(), obj.getPosition(), obj.getSize())) {
+			if(Physics.rectangleCollision(getPosition(), getSize(), obj.getPosition(), obj.getSize()) && obj.getPrice() <= coin) {
 				this.coin += obj.getCoins();
 				this.health += obj.getHealth();
 				this.max_health += obj.getMax_health();
 				this.damage += obj.getDamage();
+				this.coin -= obj.getPrice();
 				obj.setTaken(true); // On supprime l'objet dans la classe Room
 			}
 		}
