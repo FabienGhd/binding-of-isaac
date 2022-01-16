@@ -57,7 +57,6 @@ public class Room
 		this.enemy_proj = new ArrayList<Projectile>();
 		this.obstacles = new ArrayList<StaticObject>();
 		this.pickable = new ArrayList<PickableObject>();
-		//addPickableObject(ObjectInfos.hp_up, new Vector2(0.6, 0.6));
 	}
 	
 
@@ -225,20 +224,18 @@ public class Room
 	}
 	
 	private void drawWalls() {
-		//the corners have a brown background with a rock 
+		
 		//lower left corner (0,0)
-		StdDraw.picture(positionFromTileIndex(0, 0).getX(), positionFromTileIndex(0, 0).getY(), ImagePaths.BROWN, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-		StdDraw.picture(positionFromTileIndex(0, 0).getX(), positionFromTileIndex(0, 0).getY(), ImagePaths.ROCK, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+		StdDraw.picture(positionFromTileIndex(0, 0).getX(), positionFromTileIndex(0, 0).getY(), ImagePaths.CORNER_DEFAULT_BOTTOMLEFT, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 
 		//lower right corner(nb_tiles-1, 0)
-		StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, 0).getX(), positionFromTileIndex(RoomInfos.NB_TILES - 1, 0).getY(), ImagePaths.BROWN, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-		StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, 0).getX(), positionFromTileIndex(RoomInfos.NB_TILES - 1, 0).getY(), ImagePaths.ROCK, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+		StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, 0).getX(), positionFromTileIndex(RoomInfos.NB_TILES - 1, 0).getY(), ImagePaths.CORNER_DEFAULT_BOTTOMRIGHT, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+		
 		//top right corner (nb_tiles-1, nb_tiles-1)
-		StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, RoomInfos.NB_TILES - 1).getX(), positionFromTileIndex(RoomInfos.NB_TILES - 1, RoomInfos.NB_TILES - 1).getY(), ImagePaths.BROWN, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-		StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, RoomInfos.NB_TILES - 1).getX(), positionFromTileIndex(RoomInfos.NB_TILES - 1, RoomInfos.NB_TILES - 1).getY(), ImagePaths.ROCK, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+		StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, RoomInfos.NB_TILES - 1).getX(), positionFromTileIndex(RoomInfos.NB_TILES - 1, RoomInfos.NB_TILES - 1).getY(), ImagePaths.CORNER_DEFAULT_TOPRIGHT, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+		
 		//top left corner
-		StdDraw.picture(positionFromTileIndex(0, RoomInfos.NB_TILES - 1).getX(), positionFromTileIndex(0, RoomInfos.NB_TILES - 1).getY(), ImagePaths.BROWN, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-		StdDraw.picture(positionFromTileIndex(0, RoomInfos.NB_TILES - 1).getX(), positionFromTileIndex(0, RoomInfos.NB_TILES - 1).getY(), ImagePaths.ROCK, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+		StdDraw.picture(positionFromTileIndex(0, RoomInfos.NB_TILES - 1).getX(), positionFromTileIndex(0, RoomInfos.NB_TILES - 1).getY(), ImagePaths.CORNER_DEFAULT_TOPLEFT, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 		
 		//draws walls
 		for(int i = 1; i < RoomInfos.NB_TILES-1; i++) {
@@ -255,6 +252,8 @@ public class Room
 		
 		
 		//TODO: automation of doors (closed, open) 
+		
+		//TOP DOOR
 		if(!accessOtherRooms) {
 			StdDraw.picture(positionFromTileIndex(4, RoomInfos.NB_TILES - 1).getX(), 
 							positionFromTileIndex(4, RoomInfos.NB_TILES - 1).getY(), 
@@ -265,20 +264,39 @@ public class Room
 						positionFromTileIndex(4, RoomInfos.NB_TILES - 1).getY(), 
 						ImagePaths.OPENED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
 			}
-		
-		
-		
-		
-		//test
-		//right
-		StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, 4).getX(), positionFromTileIndex(RoomInfos.NB_TILES - 1, 4).getY(), ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-		//up
-		StdDraw.picture(positionFromTileIndex(4, RoomInfos.NB_TILES - 1).getX(), positionFromTileIndex(4, RoomInfos.NB_TILES - 1).getY(), ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-		//down
-		StdDraw.picture(positionFromTileIndex(4,0).getX(), positionFromTileIndex(4,0).getY(), ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-		//left
-		StdDraw.picture(positionFromTileIndex(0,4).getX(), positionFromTileIndex(0,4).getY(), ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
-		
+		//BOTTOM DOOR
+		if(!accessOtherRooms) {
+			StdDraw.picture(positionFromTileIndex(4, 0).getX(), 
+							positionFromTileIndex(4, 0).getY(), 
+							ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+
+			} else {
+				StdDraw.picture(positionFromTileIndex(4, 0).getX(), 
+						positionFromTileIndex(4, 0).getY(), 
+						ImagePaths.OPENED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+			}
+		//LEFT DOOR
+		if(!accessOtherRooms) {
+			StdDraw.picture(positionFromTileIndex(0, 4).getX(), 
+							positionFromTileIndex(0, 4).getY(), 
+							ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+
+			} else {
+				StdDraw.picture(positionFromTileIndex(0, 4).getX(), 
+						positionFromTileIndex(0, 4).getY(), 
+						ImagePaths.OPENED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+			}
+		//RIGHT DOOR
+		if(!accessOtherRooms) {
+			StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, 4).getX(), 
+							positionFromTileIndex(RoomInfos.NB_TILES - 1, 4).getY(), 
+							ImagePaths.CLOSED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+
+			} else {
+				StdDraw.picture(positionFromTileIndex(RoomInfos.NB_TILES - 1, 4).getX(), 
+						positionFromTileIndex(RoomInfos.NB_TILES - 1, 4).getY(), 
+						ImagePaths.OPENED_DOOR, RoomInfos.TILE_WIDTH, RoomInfos.TILE_HEIGHT);
+			}
 	}
 	
 	private void drawEntities() {
@@ -304,7 +322,6 @@ public class Room
 		
 		hero.drawGameObject();
 	}
-	
 	
 	
 	/**

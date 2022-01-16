@@ -16,7 +16,7 @@ import gameloop.Main;
 
 public class GameWorld 
 {
-	public static Room currentRoom;
+	private Room currentRoom;
 	private Hero hero;
 	private long lastInput;
 
@@ -24,7 +24,7 @@ public class GameWorld
 	public GameWorld(Hero hero)
 	{
 		this.hero = hero;
-		currentRoom = new MonsterRoom(hero);
+		currentRoom = new ShopRoom(hero);
 		lastInput = System.currentTimeMillis();
 	}
 

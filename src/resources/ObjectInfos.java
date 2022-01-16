@@ -5,9 +5,9 @@ import libraries.Vector2;
 
 public class ObjectInfos {
 	
-	public static final Vector2 COIN_SIZE = new Vector2(0.3, 0.3);
+	public static final Vector2 COIN_SIZE = new Vector2(0.03, 0.03);
 	public static final Vector2 LOOT_SIZE = HeroInfos.ISAAC_SIZE;
-	public static final Vector2 HEART_SIZE = new Vector2(0.3, 0.3);
+	public static final Vector2 HEART_SIZE = new Vector2(0.03, 0.03);
 	
 	public static PickableObject PENNY = new PickableObject(
 			new Vector2(0, 0), COIN_SIZE, ImagePaths.COIN, false, 1, 0, 0, 0);

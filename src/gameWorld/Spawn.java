@@ -12,12 +12,6 @@ public class Spawn extends Room {
 		
 		//no monsters and obstacles in the spawn room
 		
-		/*
-		obstacles.add(new Rock(new Vector2(0.8, 0.3), hero.getSize()));
-		obstacles.add(new Spikes(new Vector2(0.3, 0.3), hero.getSize()));
-		obstacles.add(new Rock(new Vector2(0.8, 0.2), hero.getSize()));
-		*/
-		
 	}
 	
 	public void draw() {

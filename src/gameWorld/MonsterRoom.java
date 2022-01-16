@@ -3,6 +3,8 @@ import gameobjects.*;
 import gameWorld.*;
 import libraries.StdDraw;
 import libraries.Vector2;
+import resources.ObjectInfos;
+
 import java.util.Random;
 
 public class MonsterRoom extends Room {
@@ -45,11 +47,18 @@ public class MonsterRoom extends Room {
 		}
 	}
 		
+	if(accessOtherRooms) {
+		addPickableObject(ObjectInfos.DIME, new Vector2(0.6, 0.6));
+		addPickableObject(ObjectInfos.NICKEL, new Vector2(0.3, 0.7));
+		addPickableObject(ObjectInfos.PENNY, new Vector2(0.7, 0.3));
+	}
 		
 		
 	}
 	
 	public void draw() {
 		super.drawRoom();
+		
+		
 	}
 }

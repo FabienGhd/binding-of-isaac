@@ -63,6 +63,12 @@ public class ImagePaths
 	
 	public static final String WALL_RED = "images/redWall.png";
 	public static final String WALL_RED_TOPLEFT = "images/redCornerTopLeft.png";
+	
+	public static final String CORNER_DEFAULT_TOPLEFT = "images/corner_def_leftTOP.png";
+	public static final String CORNER_DEFAULT_TOPRIGHT = "images/corner_def_rightTOP.png";
+	public static final String CORNER_DEFAULT_BOTTOMRIGHT = "images/corner_def_rightBOTTOM.png";
+	public static final String CORNER_DEFAULT_BOTTOMLEFT = "images/corner_def_leftBOTTOM.png";
+
 
 
 
