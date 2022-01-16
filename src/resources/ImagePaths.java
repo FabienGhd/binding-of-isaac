@@ -67,6 +67,8 @@ public class ImagePaths
 	public static final String CORNER_DEFAULT_BOTTOMRIGHT = "images/corner_def_rightBOTTOM.png";
 	public static final String CORNER_DEFAULT_BOTTOMLEFT = "images/corner_def_leftBOTTOM.png";
 
+	
+	
 
 
 

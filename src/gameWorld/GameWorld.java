@@ -173,7 +173,7 @@ public class GameWorld
 				if(Physics.rectangleCollision(door.getAccess_position(), RoomInfos.TILE_SIZE.scalarMultiplication(1.5), hero.getPosition(), hero.getSize()) && (System.currentTimeMillis() - lastInput > 100)) {
 					currentRoom = door.getNextRoom();
 					hero.getPosition().setX(1 - hero.getPosition().getX());
-					hero.getPosition().setY(1 - hero.getPosition().getY()); // Complément à 1 de la position	
+					hero.getPosition().setY(1 - hero.getPosition().getY()); // Complï¿½ment ï¿½ 1 de la position	
 					
 					lastInput = System.currentTimeMillis();			
 				}

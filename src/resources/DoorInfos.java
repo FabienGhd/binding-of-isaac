@@ -16,15 +16,15 @@ public class DoorInfos {
 
 	public static Vector2 DOOR_SIZE = RoomInfos.TILE_SIZE.scalarMultiplication(1);
 	
-	public static String UP_DOOR_PATH = "images/closed_door.png"; // TODO
-	public static String DOWN_DOOR_PATH = "images/closed_door.png"; // TODO
-	public static String RIGHT_DOOR_PATH = "images/closed_door.png"; // TODO
-	public static String LEFT_DOOR_PATH = "images/closed_door.png"; // TODO
+	public static String UP_DOOR_PATH = "images/closed_door.png"; 
+	public static String DOWN_DOOR_PATH = "images/closed_door_bottom.png"; 
+	public static String RIGHT_DOOR_PATH = "images/closed_door_right.png"; 
+	public static String LEFT_DOOR_PATH = "images/closed_door_left.png"; 
 	
-	public static String UP_DOOR_OPENED_PATH = "images/opened_door.png"; // TODO
-	public static String DOWN_DOOR_OPENED_PATH = "images/opened_door.png"; // TODO
-	public static String RIGHT_DOOR_OPENED_PATH = "images/opened_door.png"; // TODO
-	public static String LEFT_DOOR_OPENED_PATH = "images/opened_door.png"; // TODO
+	public static String UP_DOOR_OPENED_PATH = "images/opened_door.png"; 
+	public static String DOWN_DOOR_OPENED_PATH = "images/opened_door_bottom.png"; 
+	public static String RIGHT_DOOR_OPENED_PATH = "images/opened_door_right.png"; 
+	public static String LEFT_DOOR_OPENED_PATH = "images/opened_door_left.png"; 
 
 
 }
