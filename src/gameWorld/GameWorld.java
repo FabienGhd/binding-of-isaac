@@ -27,7 +27,7 @@ public class GameWorld
 		this.hero = hero;
 		lastInput = System.currentTimeMillis();
 		dungeon = new Dungeon(hero);
-		currentRoom = new ShopRoom(hero);
+		currentRoom = new Spawn(hero);
 	}
 
 	public void processUserInput()
