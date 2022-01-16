@@ -32,6 +32,7 @@ public class Gaper extends Monster {
 	
 	public void updateGameObject() {
 		setOld_pos(getPosition());
+		isGaperDead();
 		move();
 	}
 	
@@ -54,6 +55,9 @@ public class Gaper extends Monster {
 		return proj;
 	}
 	
+	public boolean isGaperDead() {
+		return getHealth() == 0;
+	}
 
 
 	public long getLastShoot() {

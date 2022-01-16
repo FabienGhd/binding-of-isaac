@@ -70,8 +70,8 @@ public abstract class Room
 		makeMobsPlay();
 		makeProjPlay(); // On pourra changer le nom de la fonction
 		makeObjPlay();
-		
 		roomDone();
+		
 		
 	}
 		
@@ -302,6 +302,11 @@ public abstract class Room
 			door.draw();
 		}
 	}
+	
+	public boolean isGaperDead() {
+		return false;
+	}
+	
 	
 	
 	

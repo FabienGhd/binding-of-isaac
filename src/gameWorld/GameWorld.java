@@ -134,6 +134,10 @@ public class GameWorld
 		
 	}
 	
+	public Room getCurrentRoom() {
+		return currentRoom;
+	}
+	
 	private void processKeysForShooting() {
 		if (StdDraw.isKeyPressed(Controls.shootUp))
 		{
