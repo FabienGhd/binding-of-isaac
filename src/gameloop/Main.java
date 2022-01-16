@@ -36,22 +36,28 @@ public class Main
 		manageSound();		
 	
 		// Main loop of the game - remove the comments to have a background music and/or a welcoming message in whichever language you want
-		while (!world.gameOver() || !world.getCurrentRoom().isGaperDead())
+		while (true)
 		{
-			processNextStep(world);
+			if(!world.gameOver() && !world.getCurrentRoom().isGaperDead()) {
+				System.out.println(!world.getCurrentRoom().isGaperDead());
+				System.out.println(!world.gameOver());
+				processNextStep(world);
+			}
+			else {
+				System.out.println(!world.getCurrentRoom().isGaperDead());
+				System.out.println(!world.gameOver());
+				if(world.gameOver()) {
+					Timer.beginTimer();
+					StdDraw.clear();
+					StdDraw.picture(0.7, 0.7, ImagePaths.GAMEOVER_SCREEN);
+					StdDraw.show();
+					Timer.waitToMaintainConstantFPS();
+				}
+			}
 			//welcomeFrenchClip.start();
 			//welcomeEnglishClip.start();
 			//backgroundClip.start();
 			
-		}
-		
-	
-		while(true) {
-			Timer.beginTimer();
-			StdDraw.clear();
-			StdDraw.picture(0.7, 0.7, ImagePaths.WIN_SCREEN);
-			StdDraw.show();
-			Timer.waitToMaintainConstantFPS();
 		}
 	}
 

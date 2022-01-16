@@ -1,11 +1,2 @@
-/gameobjects/
-/libraries/
-/resources/
-/gameWorld/
 /gameloop/
-/closed_door_bottom.png
-/closed_door_left.png
-/closed_door_right.png
-/opened_door_bottom.png
-/opened_door_left.png
-/opened_door_right.png
+/gameobjects/

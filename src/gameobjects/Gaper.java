@@ -56,7 +56,7 @@ public class Gaper extends Monster {
 	}
 	
 	public boolean isGaperDead() {
-		return getHealth() == 0;
+		return getHealth() <= 0;
 	}
 
 
